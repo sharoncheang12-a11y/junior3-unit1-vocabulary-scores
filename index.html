@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 1 Vocabulary · Part B · Score Tracker</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #19352f; background: #f5f7f2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 780px; margin: 0 auto; padding: 24px 16px 56px; }
+    .eyebrow { margin: 0; color: #386b57; font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { font-size: clamp(30px, 6vw, 43px); letter-spacing: -.035em; line-height: 1.1; margin: 8px 0 12px; }
+    .intro { color: #466058; line-height: 1.55; margin: 0 0 20px; }
+    .instructions { background: #e7f0e9; border-left: 4px solid #397b59; border-radius: 12px; padding: 14px 16px; line-height: 1.55; margin-bottom: 20px; }
+    .instructions p { margin: 0; }
+    .instructions p + p { margin-top: 5px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+    h2 { font-size: 18px; margin: 0; }
+    #progress { color: #47655a; font-size: 14px; font-weight: 700; white-space: nowrap; }
+    .questions { display: grid; gap: 12px; }
+    .card { background: #fff; border: 2px solid #d7e3d9; border-radius: 16px; padding: 17px; scroll-margin-top: 14px; }
+    .card.correct { border-color: #4e9463; background: #f4fbf4; }
+    .card.incorrect { border-color: #bc694c; background: #fff6f1; }
+    .number { display: inline-block; color: #386b57; font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .sentence { font-size: 17px; line-height: 1.55; margin: 0 0 14px; }
+    .blank { color: #176046; font-weight: 750; letter-spacing: .03em; white-space: nowrap; }
+    label { display: block; color: #476058; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    input { width: 100%; min-height: 50px; padding: 10px 14px; border: 1.5px solid #9fb9a8; border-radius: 11px; background: #fff; color: #19352f; font: inherit; font-size: 16px; }
+    input:disabled { opacity: 1; background: #f0f5f0; color: #355445; -webkit-text-fill-color: #355445; }
+    input:focus-visible, button:focus-visible { outline: 3px solid #e9a23a; outline-offset: 2px; }
+    .feedback { min-height: 1.2em; margin: 8px 0 0; font-size: 13px; font-weight: 700; }
+    .correct .feedback { color: #287044; }
+    .incorrect .feedback { color: #a34629; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 20px 0 0; }
+    button { min-height: 50px; padding: 10px 18px; border: 1.5px solid #9fb9a8; border-radius: 11px; background: #fff; color: #19352f; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    button.primary { background: #176046; border-color: #176046; color: #fff; }
+    button:disabled { cursor: default; opacity: .55; }
+    .remaining { color: #526c60; font-size: 13px; }
+    .result { margin-top: 18px; background: #e7f0e9; border-radius: 15px; padding: 18px; line-height: 1.5; }
+    .result strong { font-size: 25px; }
+    .result p { margin: 6px 0 0; }
+    .privacy { color: #64796b; font-size: 12px; margin-top: 22px; }
+    .identity { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #fff; border: 2px solid #d7e3d9; border-radius: 16px; padding: 16px; margin: 0 0 20px; }
+    .identity p { grid-column: 1 / -1; margin: 0; font-size: 13px; color: #526c60; line-height: 1.5; }
+    .save-status { margin: 12px 0; color: #315e4c; font-weight: 700; }
+    .save-status.error { color: #a34629; }
+    @media (max-width: 500px) { .identity { grid-template-columns: 1fr; } }
+    [hidden] { display: none !important; }
+    @media (min-width: 700px) { main { padding-top: 40px; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 1 · Part B</p>
+  <h1>Complete the sentences</h1>
+  <p class="intro">Write the whole word or phrase that fits each sentence. Change the form where needed.</p>
+  <div class="instructions">
+    <p>The first letter is given. Questions 11–24 appear in a new order each time.</p>
+    <p lang="zh-Hant">根據句意及首字母，輸入完整單字或詞組。完成全部題目後按 Check Answers。</p>
+  </div>
+  <div class="identity">
+    <div><label for="class-code">Class / 班別</label><input id="class-code" type="text" maxlength="24" autocomplete="off" placeholder="e.g. J3A" required></div>
+    <div><label for="student-number">Student number / 學號</label><input id="student-number" type="text" maxlength="20" autocomplete="off" placeholder="e.g. 08" required></div>
+    <p>Enter your class and student number before checking. Each check is recorded as one attempt. 請勿輸入姓名。</p>
+  </div>
+  <div class="section-heading"><h2>14 questions</h2><span id="progress" role="status" aria-live="polite">0 / 14 completed</span></div>
+  <div id="questions" class="questions"></div>
+  <div class="actions">
+    <button id="check" class="primary" type="button" disabled>Check Answers</button>
+    <button id="retry" type="button" hidden>Try Again</button>
+    <button id="restart" type="button">Restart</button>
+    <span id="remaining" class="remaining"></span>
+  </div>
+  <section id="result" class="result" tabindex="-1" aria-live="polite" hidden></section>
+  <p id="save-status" class="save-status" role="status" aria-live="polite">Connecting to score tracker…</p>
+  <button id="retry-save" type="button" hidden>Retry score submission</button>
+  <p class="privacy">Your class, student number, score and attempt time are sent to the teacher’s score tracker. This version needs an internet connection.</p>
+  <noscript>This exercise needs JavaScript enabled in your browser.</noscript>
+</main>
+<script>
+  'use strict';
+  // Each blank is kept as a separate question, including the two blanks in the first worksheet sentence.
+  const items = [
+    { number: 11, before: 'Before doing homework, please ', after: ' all your games and social media apps.', first: 's', answer: 'switch off' },
+    { number: 12, before: 'Then, ', after: ' your learning tasks.', first: 'f', answer: 'focus on' },
+    { number: 13, before: 'Eva was sick and missed school for a week, so she ', after: ' with her studies.', first: 'f', answer: 'fell behind' },
+    { number: 14, before: 'Amanda feels ', after: ' because she cannot make any friends in her new school.', first: 'd', answer: 'depressed' },
+    { number: 15, before: 'I sent an email to my teacher yesterday, but I am still waiting for her ', after: '.', first: 'r', answer: 'reply' },
+    { number: 16, before: 'I cannot ', after: ' this difficult math question by myself. I’d like some help.', first: 'f', answer: 'figure out' },
+    { number: 17, before: 'Building good teamwork is not easy. It needs everyone’s ', after: ' to get the task finished well.', first: 'e', answer: 'effort' },
+    { number: 18, before: 'My classmate feels stressed as he has too much work. If I were him, I would feel the ', after: '.', first: 's', answer: 'same' },
+    { number: 19, before: 'It is ', after: ' to feel nervous while giving a class presentation.', first: 'c', answer: 'common' },
+    { number: 20, before: 'Cooking dinner for ten people requires careful ', after: ' and time planning.', first: 'o', answer: 'organisation', alternatives: ['organization'] },
+    { number: 21, before: 'If you ', after: ' milk tea with water, water is much healthier for you.', first: 'c', answer: 'compare' },
+    { number: 22, before: 'My parents and I argued because we have different ', after: ' on video games.', first: 'p', answer: 'points of view' },
+    { number: 23, before: 'Instead of getting angry, she spoke ', after: ' to her friend to solve the problem.', first: 'c', answer: 'calmly' },
+    { number: 24, before: 'You can find your body level on this BMI ', after: '. Its coloured boxes show if you are healthy.', first: 'c', answer: 'chart' }
+  ];
+  const $ = id => document.getElementById(id);
+  window.scoreTrackingAvailable = false;
+  let order = [], responses = {}, locked = new Set(), checked = false;
+  function shuffle() {
+    const a = items.map(item => item.number);
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function normalize(value) {
+    return value.normalize('NFKC').trim().toLowerCase().replace(/\s+/g, ' ');
+  }
+  function correct(item, value) {
+    return [item.answer, ...(item.alternatives || [])].some(answer => normalize(value) === normalize(answer));
+  }
+  function updateProgress() {
+    const filled = items.filter(item => (responses[item.number] || '').trim()).length;
+    $('progress').textContent = filled + ' / 14 completed';
+    const identified = $('class-code').value.trim().length > 0 && $('student-number').value.trim().length > 0;
+    $('check').disabled = checked || filled !== items.length || !identified || !window.scoreTrackingAvailable;
+    $('remaining').textContent = checked ? '' : filled === items.length ? (identified ? (window.scoreTrackingAvailable ? 'Ready to check!' : 'Connecting to score tracker…') : 'Enter class and student number') : (items.length - filled) + ' left';
+  }
+  window.refreshCheckAvailability = updateProgress;
+  $('class-code').addEventListener('input', updateProgress);
+  $('student-number').addEventListener('input', updateProgress);
+  function render() {
+    const container = $('questions');
+    container.replaceChildren();
+    for (const number of order) {
+      const item = items.find(entry => entry.number === number);
+      const isCorrect = correct(item, responses[number] || '');
+      const assessed = checked || locked.has(number);
+      const card = document.createElement('article');
+      card.className = 'card' + (assessed ? (isCorrect ? ' correct' : ' incorrect') : '');
+      card.dataset.number = String(number);
+      const numberLabel = document.createElement('span');
+      numberLabel.className = 'number';
+      numberLabel.textContent = 'QUESTION ' + number;
+      const sentence = document.createElement('p');
+      sentence.className = 'sentence';
+      sentence.append(document.createTextNode(item.before));
+      const blank = document.createElement('span');
+      blank.className = 'blank';
+      blank.textContent = item.first + '____';
+      sentence.append(blank, document.createTextNode(item.after));
+      const label = document.createElement('label');
+      label.htmlFor = 'answer-' + number;
+      label.textContent = 'Your answer (starts with ' + item.first + ')';
+      const input = document.createElement('input');
+      input.id = 'answer-' + number;
+      input.type = 'text';
+      input.value = responses[number] || '';
+      input.placeholder = 'Type the whole word or phrase';
+      input.autocomplete = 'off';
+      input.autocapitalize = 'none';
+      input.spellcheck = false;
+      input.disabled = assessed;
+      input.addEventListener('input', () => { responses[number] = input.value; updateProgress(); });
+      input.addEventListener('keydown', event => {
+        if (event.key === 'Enter') {
+          event.preventDefault();
+          const next = [...document.querySelectorAll('.card input:not(:disabled)')];
+          const index = next.indexOf(input);
+          if (index >= 0 && index + 1 < next.length) next[index + 1].focus();
+          else if (!$('check').disabled) $('check').focus();
+        }
+      });
+      const feedback = document.createElement('p');
+      feedback.className = 'feedback';
+      feedback.textContent = assessed ? (isCorrect ? '✓ Correct' : '↻ Try this one again') : '';
+      card.append(numberLabel, sentence, label, input, feedback);
+      container.append(card);
+    }
+    $('retry').hidden = !checked;
+    updateProgress();
+  }
+  function restart() {
+    order = shuffle();
+    responses = {};
+    locked = new Set();
+    checked = false;
+    $('result').hidden = true;
+    render();
+    window.scrollTo(0, 0);
+  }
+  $('check').addEventListener('click', () => {
+    if ($('check').disabled || checked) return;
+    checked = true;
+    const score = items.filter(item => correct(item, responses[item.number] || '')).length;
+    render();
+    $('result').replaceChildren();
+    const headline = document.createElement('strong');
+    headline.textContent = 'Score ' + score + '/14';
+    const message = document.createElement('p');
+    message.textContent = score === 14 ? 'Excellent! All 14 answers are correct. Tap Try Again for a fresh round.' : 'Tap Try Again to redo the incorrect answers. Correct answers will stay in place.';
+    $('result').append(headline, message);
+    $('result').hidden = false;
+    $('result').focus();
+    $('result').scrollIntoView({ block: 'nearest' });
+    window.dispatchEvent(new CustomEvent('unit1-score-ready', { detail: {
+      exerciseId: 'unit1-part-b-11-24', classCode: $('class-code').value.trim(),
+      studentNumber: $('student-number').value.trim(), score, total: 14
+    }}));
+  });
+  $('retry').addEventListener('click', () => {
+    if (!checked) return;
+    if (items.every(item => correct(item, responses[item.number] || ''))) { restart(); return; }
+    for (const item of items) {
+      if (correct(item, responses[item.number] || '')) locked.add(item.number);
+      else delete responses[item.number];
+    }
+    checked = false;
+    $('result').hidden = true;
+    render();
+    const first = $('questions').querySelector('input:not(:disabled)');
+    if (first) { first.focus(); first.scrollIntoView({ block: 'center' }); }
+  });
+  $('restart').addEventListener('click', restart);
+  restart();
+</script>
+<script src="firebase-config.js"></script>
+<script type="module" src="student-scores.js"></script>
+</body>
+</html>
