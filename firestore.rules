@@ -5,23 +5,33 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == 'oKMOFiZupfeExUqXxS22lHfi2Ay2';
     }
 
-    function validAttempt() {
+    function validAttempt(expectedExercise, expectedTotal) {
       let data = request.resource.data;
       return data.keys().hasAll(['exerciseId', 'classCode', 'studentNumber', 'score', 'total', 'studentUid', 'createdAt'])
         && data.keys().hasOnly(['exerciseId', 'classCode', 'studentNumber', 'score', 'total', 'studentUid', 'createdAt'])
-        && data.exerciseId == 'unit1-part-b-11-24'
+        && data.exerciseId == expectedExercise
         && data.classCode is string && data.classCode.size() > 0 && data.classCode.size() <= 24
         && data.studentNumber is string && data.studentNumber.size() > 0 && data.studentNumber.size() <= 20
-        && data.score is int && data.score >= 0 && data.score <= 14
-        && data.total == 14
+        && data.score is int && data.score >= 0 && data.score <= expectedTotal
+        && data.total == expectedTotal
         && data.studentUid == request.auth.uid
         && data.createdAt is timestamp;
     }
 
     match /unit1Attempts/{attemptId} {
       allow get, list: if teacher();
-      allow create: if request.auth != null && validAttempt();
+      allow create: if request.auth != null && validAttempt('unit1-part-b-11-24', 14);
       // A retry may write the exact same attempt again, but cannot change it.
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.studentUid
+        && request.resource.data == resource.data;
+      allow delete: if false;
+    }
+
+    match /unit1PartB25To40Attempts/{attemptId} {
+      allow get, list: if teacher();
+      allow create: if request.auth != null && validAttempt('unit1-part-b-25-40', 16);
+      // Retries may repeat an identical write, but cannot alter a saved attempt.
       allow update: if request.auth != null
         && request.auth.uid == resource.data.studentUid
         && request.resource.data == resource.data;
