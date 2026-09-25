@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 1 Part B 25–40｜3 題隨機抽查</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #19352f; background: #f5f7f2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(100%, 740px); margin: auto; padding: 24px 16px 56px; }
+    .eyebrow { margin: 0; color: #386b57; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { margin: 8px 0 12px; font-size: clamp(29px, 7vw, 42px); line-height: 1.15; }
+    .intro { margin: 0 0 18px; line-height: 1.6; color: #466058; }
+    .notice { padding: 14px 16px; margin: 0 0 22px; border-left: 4px solid #397b59; border-radius: 12px; background: #e7f0e9; line-height: 1.6; }
+    .notice p { margin: 0; }
+    .notice p + p { margin-top: 4px; }
+    .heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0 0 12px; }
+    h2 { margin: 0; font-size: 19px; }
+    #progress { white-space: nowrap; color: #47655a; font-size: 14px; font-weight: 700; }
+    .questions { display: grid; gap: 12px; }
+    .card { padding: 17px; border: 2px solid #d7e3d9; border-radius: 16px; background: #fff; }
+    .card.correct { border-color: #4e9463; background: #f4fbf4; }
+    .card.incorrect { border-color: #bc694c; background: #fff6f1; }
+    .number { display: block; margin-bottom: 8px; color: #386b57; font-size: 13px; font-weight: 800; }
+    .sentence { margin: 0 0 14px; font-size: 17px; line-height: 1.55; }
+    .blank { color: #176046; font-weight: 750; white-space: nowrap; }
+    label { display: block; margin-bottom: 6px; color: #476058; font-size: 13px; font-weight: 700; }
+    input { width: 100%; min-height: 50px; padding: 10px 14px; border: 1.5px solid #9fb9a8; border-radius: 11px; background: #fff; color: #19352f; font: inherit; font-size: 16px; }
+    input:disabled { opacity: 1; background: #f0f5f0; color: #355445; -webkit-text-fill-color: #355445; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #e9a23a; outline-offset: 2px; }
+    .feedback { min-height: 1.2em; margin: 8px 0 0; font-size: 14px; font-weight: 700; }
+    .correct .feedback { color: #287044; }
+    .incorrect .feedback { color: #a34629; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 20px; }
+    button { min-height: 52px; padding: 10px 20px; border: 1.5px solid #9fb9a8; border-radius: 11px; background: #fff; color: #19352f; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    button.primary { border-color: #176046; background: #176046; color: #fff; }
+    button:disabled { opacity: .55; cursor: default; }
+    #remaining { color: #526c60; font-size: 14px; }
+    .result { margin-top: 20px; padding: 20px; border: 2px solid #397b59; border-radius: 16px; background: #e7f0e9; line-height: 1.55; }
+    .result strong { display: block; font-size: clamp(32px, 8vw, 46px); line-height: 1.1; }
+    .result p { margin: 10px 0 0; }
+    .privacy { margin-top: 22px; color: #64796b; font-size: 12px; line-height: 1.5; }
+    [hidden] { display: none !important; }
+    @media (min-width: 700px) { main { padding-top: 40px; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 1 · Part B · 25–40</p>
+  <h1>3 題隨機抽查</h1>
+  <p class="intro">每次從工作紙第 25–40 題抽出 3 題。根據句意填寫完整英文單字或詞組。</p>
+  <div class="notice">
+    <p>第 25–34 題保留首字母提示。三題填妥後按 <strong>Check Answers</strong>，再把分數畫面給老師看。</p>
+    <p>按 <strong>Restart</strong> 會重新隨機抽題，並清除這一輪答案和分數。</p>
+  </div>
+  <div class="heading"><h2>本輪題目</h2><span id="progress" role="status" aria-live="polite">0 / 3 completed</span></div>
+  <div id="questions" class="questions"></div>
+  <div class="actions">
+    <button id="check" class="primary" type="button" disabled>Check Answers</button>
+    <button id="restart" type="button">Restart</button>
+    <span id="remaining"></span>
+  </div>
+  <section id="result" class="result" tabindex="-1" role="status" aria-live="polite" hidden></section>
+  <p class="privacy">抽查結果只在此畫面顯示，不會上傳或儲存；下載此 HTML 後也可以離線使用。</p>
+  <noscript>請開啟瀏覽器的 JavaScript 才能使用練習。</noscript>
+</main>
+<script>
+  'use strict';
+  // Split multi-blank worksheet sentences so one sampled card cannot reveal another answer.
+  const items = [
+    { number: 25, before: 'Tom makes ', after: ' plans for his trip. He writes down many small things he needs to do.', first: 'd', answer: 'detailed' },
+    { number: 26, before: 'I often use ', after: ' with a picture on one side and the word on the other side to study new vocabulary.', first: 'f', answer: 'flashcards' },
+    { number: 27, before: 'We like the ', after: ' of this Christmas poster. It is colourful, and the large words make it easy to read.', first: 'd', answer: 'design' },
+    { number: 28, before: 'The teacher draws a simple ', after: ' on the board to show how paper is made.', first: 'd', answer: 'diagram' },
+    { number: 29, before: 'The library has an ', after: ' collection of English books that students can borrow.', first: 'e', answer: 'extensive' },
+    { number: 30, before: 'We wear sunscreen in the summer to ', after: ' our skin from the sun.', first: 'p', answer: 'protect' },
+    { number: 31, before: 'On Sports Day, students have the ', after: ' to choose which races they want to join.', first: 'f', answer: 'freedom' },
+    { number: 32, before: 'My mom set a strict ', after: ' about my phone usage.', first: 'r', answer: 'rule' },
+    { number: 33, before: 'My mom set limits on my phone usage, but I know she does it ', after: '.', first: 'o', answer: 'out of love' },
+    { number: 34, before: 'What was your teacher’s ', after: ' when everyone got 100% on the quiz? Was she surprised or shocked?', first: 'r', answer: 'reaction' },
+    { number: 35, before: 'My grandpa buys a printed ', after: ' every morning to know local news.', answer: 'newspaper' },
+    { number: 36, before: 'When she feels stressed, listening to soft music helps her ', after: ' her emotions.', answer: 'handle' },
+    { number: 37, before: 'We can find different ', after: ' of learners in this class.', answer: 'types' },
+    { number: 38, before: 'Those who are number-smart are good at ', after: ' and math.', answer: 'problem-solving', alternatives: ['problem solving'] },
+    { number: 39, before: 'Word-smart learners ', after: ' in using words.', answer: 'excel' },
+    { number: 40, before: 'Word-smart learners use words and ', after: '.', answer: 'phrases' }
+  ];
+  const $ = id => document.getElementById(id);
+  let selection = [], responses = {}, checked = false;
+
+  function drawThree() {
+    const pool = [...items];
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, 3);
+  }
+  function normalize(value) {
+    return value.normalize('NFKC').trim().toLowerCase().replace(/\s+/g, ' ');
+  }
+  function isCorrect(item, value) {
+    return [item.answer, ...(item.alternatives || [])].some(answer => normalize(value) === normalize(answer));
+  }
+  function updateProgress() {
+    const filled = selection.filter(item => (responses[item.number] || '').trim()).length;
+    $('progress').textContent = filled + ' / 3 completed';
+    $('check').disabled = checked || filled !== 3;
+    $('remaining').textContent = checked ? '' : filled === 3 ? 'Ready to check!' : (3 - filled) + ' left';
+  }
+  function render() {
+    $('questions').replaceChildren();
+    for (const item of selection) {
+      const card = document.createElement('article');
+      const correct = isCorrect(item, responses[item.number] || '');
+      card.className = 'card' + (checked ? (correct ? ' correct' : ' incorrect') : '');
+      card.dataset.number = String(item.number);
+      const number = document.createElement('span');
+      number.className = 'number';
+      number.textContent = 'QUESTION ' + item.number;
+      const sentence = document.createElement('p');
+      sentence.className = 'sentence';
+      const blank = document.createElement('span');
+      blank.className = 'blank';
+      blank.textContent = item.first ? item.first + '____' : '______';
+      sentence.append(document.createTextNode(item.before), blank, document.createTextNode(item.after));
+      const label = document.createElement('label');
+      label.htmlFor = 'answer-' + item.number;
+      label.textContent = item.first ? 'Your answer (starts with ' + item.first + ')' : 'Your answer';
+      const input = document.createElement('input');
+      input.id = label.htmlFor;
+      input.type = 'text';
+      input.value = responses[item.number] || '';
+      input.placeholder = 'Type the whole word or phrase';
+      input.autocomplete = 'off';
+      input.autocapitalize = 'none';
+      input.spellcheck = false;
+      input.disabled = checked;
+      input.addEventListener('input', () => { responses[item.number] = input.value; updateProgress(); });
+      input.addEventListener('keydown', event => {
+        if (event.key !== 'Enter') return;
+        event.preventDefault();
+        const fields = [...document.querySelectorAll('.card input:not(:disabled)')];
+        const next = fields[fields.indexOf(input) + 1];
+        if (next) next.focus();
+        else if (!$('check').disabled) $('check').focus();
+      });
+      const feedback = document.createElement('p');
+      feedback.className = 'feedback';
+      feedback.textContent = checked ? (correct ? '✓ Correct' : '✗ Incorrect') : '';
+      card.append(number, sentence, label, input, feedback);
+      $('questions').append(card);
+    }
+    updateProgress();
+  }
+  function restart() {
+    selection = drawThree();
+    responses = {};
+    checked = false;
+    $('result').hidden = true;
+    render();
+    window.scrollTo(0, 0);
+  }
+  $('check').addEventListener('click', () => {
+    if ($('check').disabled) return;
+    checked = true;
+    const score = selection.filter(item => isCorrect(item, responses[item.number] || '')).length;
+    render();
+    $('result').replaceChildren();
+    const headline = document.createElement('strong');
+    headline.textContent = 'Score ' + score + '/3';
+    const message = document.createElement('p');
+    message.textContent = '請把這個分數畫面給老師看。這一輪題號：' + selection.map(item => item.number).join('、') + '。';
+    $('result').append(headline, message);
+    $('result').hidden = false;
+    $('result').focus();
+    $('result').scrollIntoView({ block: 'nearest' });
+  });
+  $('restart').addEventListener('click', restart);
+  restart();
+</script>
+</body>
+</html>
