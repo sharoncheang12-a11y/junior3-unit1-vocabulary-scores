@@ -9,8 +9,6 @@ const configured = config && ['apiKey', 'authDomain', 'projectId', 'appId'].ever
 let auth;
 let db;
 let attempts = [];
-let lastDocument = null;
-let canLoadMore = false;
 let loading = false;
 
 function showStatus(message, error = false) {
@@ -18,11 +16,15 @@ function showStatus(message, error = false) {
   $('status').classList.toggle('error', error);
 }
 
-function render() {
+function filterAttempts() {
   const classFilter = $('filter-class').value.trim().toLowerCase();
   const studentFilter = $('filter-number').value.trim().toLowerCase();
-  const visible = attempts.filter(attempt =>
-    attempt.classCode.toLowerCase().includes(classFilter) && attempt.studentNumber.toLowerCase().includes(studentFilter));
+  return attempts.filter(attempt =>
+    attempt.classCode.toLowerCase().includes(classFilter) &&
+    attempt.studentNumber.toLowerCase().includes(studentFilter));
+}
+
+function renderScores(visible) {
   $('rows').replaceChildren();
   for (const attempt of visible) {
     const tr = document.createElement('tr');
@@ -35,27 +37,73 @@ function render() {
     tr.lastElementChild.className = 'score';
     $('rows').append(tr);
   }
-  $('summary').textContent = `${visible.length} shown · ${attempts.length} loaded${canLoadMore ? ' · more available' : ''}`;
-  $('more').hidden = !canLoadMore;
+  $('summary').textContent = `${visible.length} shown · ${attempts.length} loaded`;
 }
 
-async function loadAttempts(reset = false) {
+function renderAccuracy(visible) {
+  const firstByStudent = new Map();
+  // The query is newest first; walking backwards keeps each student's first attempt.
+  for (let i = visible.length - 1; i >= 0; i--) {
+    const attempt = visible[i];
+    const key = attempt.classCode.trim().toLowerCase() + '\u0000' + attempt.studentNumber.trim().toLowerCase();
+    if (!firstByStudent.has(key)) firstByStudent.set(key, attempt);
+  }
+  const firstAttempts = [...firstByStudent.values()];
+  const usable = firstAttempts.filter(attempt => Array.isArray(attempt.correctQuestions) &&
+    attempt.correctQuestions.every(number => Number.isInteger(number) && number >= 11 && number <= 40));
+  const excluded = firstAttempts.length - usable.length;
+  $('accuracy-summary').textContent = usable.length
+    ? `${usable.length} 位學生的首次交卷${excluded ? ` · ${excluded} 位缺少逐題資料` : ''}`
+    : '尚無可計算的逐題資料。';
+  $('accuracy-rows').replaceChildren();
+  if (!usable.length) return;
+
+  const rates = Array.from({length: 30}, (_, index) => {
+    const number = index + 11;
+    const correct = usable.filter(attempt => attempt.correctQuestions.includes(number)).length;
+    return {number, correct, percent: Math.round(correct * 100 / usable.length)};
+  }).sort((a, b) => a.percent - b.percent || a.number - b.number);
+
+  for (const item of rates) {
+    const tr = document.createElement('tr');
+    if (item.percent < 60) tr.className = 'needs-review';
+    for (const value of [String(item.number), `${item.correct} / ${usable.length}`, `${item.percent}%`]) {
+      const td = document.createElement('td');
+      td.textContent = value;
+      tr.append(td);
+    }
+    tr.lastElementChild.className = 'rate';
+    $('accuracy-rows').append(tr);
+  }
+}
+
+function render() {
+  const visible = filterAttempts();
+  renderScores(visible);
+  renderAccuracy(visible);
+}
+
+async function loadAttempts() {
   if (loading || !db) return;
   loading = true;
   $('refresh').disabled = true;
-  $('more').disabled = true;
   showStatus('Loading attempts…');
   try {
-    if (reset) { attempts = []; lastDocument = null; canLoadMore = false; }
-    const base = [collection(db, 'unit1PartB11To40Attempts'), orderBy('createdAt', 'desc'), limit(100)];
-    if (lastDocument) base.push(startAfter(lastDocument));
-    const snapshot = await getDocs(query(...base));
-    for (const document of snapshot.docs) {
-      const data = document.data();
-      if (data.exerciseId === 'unit1-part-b-11-40') attempts.push(data);
+    const loaded = [];
+    let lastDocument = null;
+    while (true) {
+      const constraints = [orderBy('createdAt', 'desc'), limit(100)];
+      if (lastDocument) constraints.push(startAfter(lastDocument));
+      const snapshot = await getDocs(query(collection(db, 'unit1PartB11To40Attempts'), ...constraints));
+      for (const document of snapshot.docs) {
+        const data = document.data();
+        if (data.exerciseId === 'unit1-part-b-11-40') loaded.push(data);
+      }
+      if (snapshot.docs.length < 100) break;
+      lastDocument = snapshot.docs.at(-1);
+      showStatus(`Loading attempts… ${loaded.length}`);
     }
-    lastDocument = snapshot.docs.at(-1) || lastDocument;
-    canLoadMore = snapshot.docs.length === 100;
+    attempts = loaded;
     render();
     showStatus('Scores are private to this teacher account.');
   } catch (error) {
@@ -64,14 +112,12 @@ async function loadAttempts(reset = false) {
   } finally {
     loading = false;
     $('refresh').disabled = false;
-    $('more').disabled = false;
   }
 }
 
 $('filter-class').addEventListener('input', render);
 $('filter-number').addEventListener('input', render);
-$('refresh').addEventListener('click', () => loadAttempts(true));
-$('more').addEventListener('click', () => loadAttempts(false));
+$('refresh').addEventListener('click', loadAttempts);
 
 if (!configured) {
   $('sign-in').disabled = true;
@@ -91,6 +137,7 @@ if (!configured) {
       $('sign-in').hidden = signedIn;
       $('sign-out').hidden = !signedIn;
       $('results').hidden = true;
+      $('accuracy').hidden = true;
       $('uid-help').hidden = !signedIn;
       if (!signedIn) { showStatus('Sign in with the teacher’s Google account to see scores.'); return; }
       $('teacher-uid').textContent = user.uid;
@@ -101,7 +148,8 @@ if (!configured) {
       } else {
         $('uid-help').hidden = true;
         $('results').hidden = false;
-        loadAttempts(true);
+        $('accuracy').hidden = false;
+        loadAttempts();
       }
     }, error => showStatus('Authentication failed: ' + error.message, true));
   } catch (error) {
