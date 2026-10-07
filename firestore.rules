@@ -5,10 +5,10 @@ service cloud.firestore {
       return request.auth != null && request.auth.uid == 'oKMOFiZupfeExUqXxS22lHfi2Ay2';
     }
 
-    function validAttempt(expectedExercise, expectedTotal, withQuestionResults) {
+    function validAttempt(expectedExercise, expectedTotal, allowedQuestionNumbers) {
       let data = request.resource.data;
       let baseFields = ['exerciseId', 'classCode', 'studentNumber', 'score', 'total', 'studentUid', 'createdAt'];
-      let allowedFields = withQuestionResults ? baseFields.concat(['correctQuestions']) : baseFields;
+      let allowedFields = allowedQuestionNumbers.size() > 0 ? baseFields.concat(['correctQuestions']) : baseFields;
       return data.keys().hasAll(allowedFields)
         && data.keys().hasOnly(allowedFields)
         && data.exerciseId == expectedExercise
@@ -18,17 +18,15 @@ service cloud.firestore {
         && data.total == expectedTotal
         && data.studentUid == request.auth.uid
         && data.createdAt is timestamp
-        && (!withQuestionResults || (data.correctQuestions is list
+        && (allowedQuestionNumbers.size() == 0 || (data.correctQuestions is list
           && data.correctQuestions.size() == data.score
           && data.correctQuestions.toSet().size() == data.correctQuestions.size()
-          && data.correctQuestions.hasOnly([11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-            21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35,
-            36, 37, 38, 39, 40])));
+          && data.correctQuestions.hasOnly(allowedQuestionNumbers)));
     }
 
     match /unit1Attempts/{attemptId} {
       allow get, list: if teacher();
-      allow create: if request.auth != null && validAttempt('unit1-part-b-11-24', 14, false);
+      allow create: if request.auth != null && validAttempt('unit1-part-b-11-24', 14, []);
       // A retry may write the exact same attempt again, but cannot change it.
       allow update: if request.auth != null
         && request.auth.uid == resource.data.studentUid
@@ -38,7 +36,7 @@ service cloud.firestore {
 
     match /unit1PartB25To40Attempts/{attemptId} {
       allow get, list: if teacher();
-      allow create: if request.auth != null && validAttempt('unit1-part-b-25-40', 16, false);
+      allow create: if request.auth != null && validAttempt('unit1-part-b-25-40', 16, []);
       // Retries may repeat an identical write, but cannot alter a saved attempt.
       allow update: if request.auth != null
         && request.auth.uid == resource.data.studentUid
@@ -48,8 +46,21 @@ service cloud.firestore {
 
     match /unit1PartB11To40Attempts/{attemptId} {
       allow get, list: if teacher();
-      allow create: if request.auth != null && validAttempt('unit1-part-b-11-40', 30, true);
+      allow create: if request.auth != null && validAttempt('unit1-part-b-11-40', 30,
+        [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+          28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40]);
       // Retries may repeat an identical write, but cannot alter a saved attempt.
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.studentUid
+        && request.resource.data == resource.data;
+      allow delete: if false;
+    }
+
+    match /unit1PartCAttempts/{attemptId} {
+      allow get, list: if teacher();
+      allow create: if request.auth != null && validAttempt('unit1-part-c', 8,
+        [1, 2, 3, 4, 5, 6, 7, 8]);
+      // A retry may write the exact same attempt again, but cannot change it.
       allow update: if request.auth != null
         && request.auth.uid == resource.data.studentUid
         && request.resource.data == resource.data;
