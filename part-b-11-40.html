@@ -203,7 +203,8 @@
   $('check').addEventListener('click', () => {
     if ($('check').disabled || checked) return;
     checked = true;
-    const score = items.filter(item => correct(item, responses[item.number] || '')).length;
+    const correctQuestions = items.filter(item => correct(item, responses[item.number] || '')).map(item => item.number);
+    const score = correctQuestions.length;
     render();
     $('result').replaceChildren();
     const headline = document.createElement('strong');
@@ -216,7 +217,7 @@
     $('result').scrollIntoView({ block: 'nearest' });
     window.dispatchEvent(new CustomEvent('unit1-score-ready', { detail: {
       exerciseId: 'unit1-part-b-11-40', classCode: $('class-code').value.trim(),
-      studentNumber: $('student-number').value.trim(), score, total: 30
+      studentNumber: $('student-number').value.trim(), score, total: 30, correctQuestions
     }}));
   });
   $('retry').addEventListener('click', () => {
