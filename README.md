@@ -33,3 +33,5 @@ The original 11–24 exercise was verified on 2026-09-23: a 14/14 test attempt w
 The 25–40 exercise was verified on 2026-09-24: the published page connected, a clearly labelled `TEST-25-40` / `00` attempt scored 16/16, and that attempt appeared in the signed-in teacher panel. This test entry remains in the teacher records.
 
 The 11–40 exercise and question-accuracy panel were verified on 2026-10-07: `TEST-11-40` / `00` saved a 29/30 first attempt and a 30/30 retry. Both appear in the signed-in teacher score list, while question 11 remains 0/1 (0%) in the first-attempt accuracy table. These two clearly labelled test entries remain in the teacher records.
+
+Part C was verified on 2026-10-07: `TEST-C` / `00` saved a 6/8 first attempt and an 8/8 retry. Both appeared in the teacher score list, while questions 1 and 7 showed 0/1 (0%) in the first-attempt accuracy table. These two clearly labelled test entries remain in the teacher records.
