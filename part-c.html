@@ -141,12 +141,15 @@
       button.setAttribute('aria-label', entry.label + (used ? ', already used' : ''));
       button.addEventListener('click', () => {
         if (selected === null || checked || locked.has(selected)) return;
+        const currentIndex = order.indexOf(selected);
         responses[selected] = id;
         selected = null;
         render();
         if (window.matchMedia('(max-width: 560px)').matches) {
-          const next = $('questions').querySelector('.card:not(:disabled) .choice');
-          if (next && next.textContent === 'Tap to choose a phrase') next.parentElement.scrollIntoView({block: 'center'});
+          const nextNumber = [...order.slice(currentIndex + 1), ...order.slice(0, currentIndex)]
+            .find(number => !responses[number] && !locked.has(number));
+          const target = nextNumber ? $('questions').querySelector(`.card[data-number="${nextNumber}"]`) : $('check');
+          target.scrollIntoView({block: 'center'});
         }
       });
       bank.append(button);
