@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 1 Vocabulary · Part C</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #19352f; background: #f5f7f2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 860px; margin: auto; padding: 25px 16px 60px; }
+    .eyebrow { margin: 0; color: #386b57; font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { font-size: clamp(30px, 6vw, 43px); line-height: 1.1; margin: 8px 0 12px; }
+    h2 { font-size: 18px; margin: 0 0 12px; }
+    .intro, .note { color: #476058; line-height: 1.55; }
+    .instructions { background: #e7f0e9; border-left: 4px solid #397b59; border-radius: 12px; padding: 14px 16px; line-height: 1.55; margin: 18px 0; }
+    .instructions p { margin: 0; }
+    .instructions p + p { margin-top: 5px; }
+    .identity { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #fff; border: 2px solid #d7e3d9; border-radius: 16px; padding: 16px; margin-bottom: 20px; }
+    .identity p { grid-column: 1 / -1; margin: 0; font-size: 13px; color: #526c60; line-height: 1.5; }
+    label { display: block; color: #476058; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    input { width: 100%; min-height: 50px; padding: 10px 14px; border: 1.5px solid #9fb9a8; border-radius: 11px; background: #fff; color: #19352f; font: inherit; font-size: 16px; }
+    button { min-height: 50px; padding: 10px 16px; border: 1.5px solid #9fb9a8; border-radius: 11px; background: #fff; color: #19352f; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    button:disabled { opacity: .52; cursor: default; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #e9a23a; outline-offset: 2px; }
+    button.primary { background: #176046; border-color: #176046; color: #fff; }
+    .bank-wrap { position: sticky; top: 0; z-index: 2; background: #f5f7f2; padding: 9px 0 14px; border-bottom: 1px solid #d7e3d9; }
+    .bank { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .bank button { width: 100%; text-align: left; font-size: 14px; line-height: 1.25; background: #fff; }
+    .bank button.used { background: #e5eae5; color: #66766b; }
+    .section-heading { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin: 20px 0 12px; }
+    #progress { font-size: 14px; font-weight: 700; color: #476058; white-space: nowrap; }
+    .questions { display: grid; gap: 12px; }
+    .card { width: 100%; text-align: left; background: #fff; border: 2px solid #d7e3d9; border-radius: 16px; padding: 17px; scroll-margin-top: 160px; }
+    .card.selected { border-color: #176046; box-shadow: 0 0 0 3px #c9e3d0; }
+    .card.correct { border-color: #4e9463; background: #f4fbf4; }
+    .card.incorrect { border-color: #bc694c; background: #fff6f1; }
+    .number { display: block; color: #386b57; font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .sentence { display: block; font-size: 17px; line-height: 1.55; }
+    .blank { color: #176046; font-weight: 800; white-space: nowrap; }
+    .choice { display: block; margin-top: 12px; color: #315e4c; font-size: 14px; font-weight: 700; }
+    .feedback { display: block; margin-top: 7px; font-size: 13px; font-weight: 700; }
+    .correct .feedback { color: #287044; }
+    .incorrect .feedback { color: #a34629; }
+    .actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; margin: 20px 0; }
+    .remaining { color: #526c60; font-size: 13px; }
+    .result { background: #e7f0e9; border-radius: 15px; padding: 18px; line-height: 1.5; }
+    .result strong { font-size: 25px; }
+    .result p { margin: 6px 0 0; }
+    .save-status { margin: 12px 0; color: #315e4c; font-weight: 700; }
+    .save-status.error { color: #a34629; }
+    .privacy { color: #64796b; font-size: 12px; line-height: 1.5; margin-top: 22px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 560px) { .identity, .bank { grid-template-columns: 1fr; } .bank-wrap { position: static; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 1 · Part C</p>
+  <h1>Study tips: choose the best phrase</h1>
+  <p class="intro">Choose one phrase for each sentence. Use every phrase once.</p>
+  <div class="instructions">
+    <p>Tap a sentence, then tap a phrase in the word bank. Tap the sentence again to change its answer.</p>
+    <p lang="zh-Hant">先點句子，再點詞組。每個詞組只可用一次；答完 8 題後才會批改。部分詞組在完整句子中需要改變詞形。</p>
+  </div>
+  <div class="identity">
+    <div><label for="class-code">Class / 班別</label><input id="class-code" maxlength="24" autocomplete="off" placeholder="e.g. J3A"></div>
+    <div><label for="student-number">Student number / 學號</label><input id="student-number" maxlength="20" autocomplete="off" placeholder="e.g. 08"></div>
+    <p>Enter your class and student number before checking. Each check is recorded as one attempt. 請勿輸入姓名。</p>
+  </div>
+  <div class="bank-wrap"><h2>Word bank</h2><div id="bank" class="bank"></div></div>
+  <div class="section-heading"><h2>8 sentences</h2><span id="progress" role="status" aria-live="polite">0 / 8 completed</span></div>
+  <div id="questions" class="questions"></div>
+  <div class="actions">
+    <button id="check" class="primary" type="button" disabled>Check Answers</button>
+    <button id="retry" type="button" hidden>Try Again</button>
+    <button id="restart" type="button">Restart</button>
+    <span id="remaining" class="remaining"></span>
+  </div>
+  <section id="result" class="result" tabindex="-1" aria-live="polite" hidden></section>
+  <p id="save-status" class="save-status" role="status" aria-live="polite">Connecting to score tracker…</p>
+  <button id="retry-save" type="button" hidden>Retry score submission</button>
+  <p class="privacy">Your class, student number, score, correctly answered question numbers and attempt time are sent to the teacher’s private score page. Your chosen phrases are not stored. An internet connection is required.</p>
+  <noscript>This exercise needs JavaScript enabled in your browser.</noscript>
+</main>
+<script>
+  'use strict';
+  const phrases = [
+    { id: 'avoid', label: 'avoid distractions' },
+    { id: 'cram', label: 'don’t cram for your tests' },
+    { id: 'group', label: 'form a study group' },
+    { id: 'notes', label: 'review your notes' },
+    { id: 'goals', label: 'set study goals' },
+    { id: 'space', label: 'space out your revision' },
+    { id: 'plan', label: 'work out a study plan' },
+    { id: 'break', label: 'take a break' }
+  ];
+  const items = [
+    { number: 1, before: 'If you want to recall and understand what you have learnt in class, you should ', after: ' regularly.', answer: 'notes', form: 'review your notes' },
+    { number: 2, before: '', after: ' the night before an exam. You cannot remember lots of information in a short time.', answer: 'cram', form: 'Don’t cram for your tests' },
+    { number: 3, before: 'Last week, our English teacher ', after: ' for us, so we could support each other with our studies.', answer: 'group', form: 'formed a study group' },
+    { number: 4, before: 'Before you start learning, ', after: ' so you know what you need to finish. For example, you can choose 10 new words to learn each day.', answer: 'goals', form: 'set study goals' },
+    { number: 5, before: 'Try to ', after: ' so you have a clear timetable for all your subjects.', answer: 'plan', form: 'work out a study plan' },
+    { number: 6, before: 'Do not study everything in one day. Try to ', after: ' over several weeks.', answer: 'space', form: 'space out your revision' },
+    { number: 7, before: 'Turn off social-media notifications to ', after: ' while you do schoolwork.', answer: 'avoid', form: 'avoid distractions' },
+    { number: 8, before: '', after: ' after long hours of reading helps refresh your mind and body.', answer: 'break', form: 'Taking a break' }
+  ];
+  const $ = id => document.getElementById(id);
+  window.scoreTrackingAvailable = false;
+  let order = [], bankOrder = [], responses = {}, locked = new Set(), selected = null, checked = false;
+  function shuffled(values) {
+    const copy = [...values];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+  function phrase(id) { return phrases.find(entry => entry.id === id); }
+  function updateProgress() {
+    const filled = Object.keys(responses).length;
+    const identified = $('class-code').value.trim() && $('student-number').value.trim();
+    $('progress').textContent = filled + ' / 8 completed';
+    $('check').disabled = checked || filled !== items.length || !identified || !window.scoreTrackingAvailable;
+    $('remaining').textContent = checked ? '' : filled < items.length ? (items.length - filled) + ' left' : !identified ? 'Enter class and student number' : window.scoreTrackingAvailable ? 'Ready to check!' : 'Connecting to score tracker…';
+  }
+  window.refreshCheckAvailability = updateProgress;
+  $('class-code').addEventListener('input', updateProgress);
+  $('student-number').addEventListener('input', updateProgress);
+  function render() {
+    const bank = $('bank');
+    bank.replaceChildren();
+    for (const id of bankOrder) {
+      const entry = phrase(id);
+      const used = Object.entries(responses).some(([number, value]) => value === id && Number(number) !== selected);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = entry.label;
+      button.className = used ? 'used' : '';
+      button.disabled = checked || used || selected === null;
+      button.setAttribute('aria-label', entry.label + (used ? ', already used' : ''));
+      button.addEventListener('click', () => {
+        if (selected === null || checked || locked.has(selected)) return;
+        responses[selected] = id;
+        selected = null;
+        render();
+        if (window.matchMedia('(max-width: 560px)').matches) {
+          const next = $('questions').querySelector('.card:not(:disabled) .choice');
+          if (next && next.textContent === 'Tap to choose a phrase') next.parentElement.scrollIntoView({block: 'center'});
+        }
+      });
+      bank.append(button);
+    }
+    const questions = $('questions');
+    questions.replaceChildren();
+    for (const number of order) {
+      const item = items.find(entry => entry.number === number);
+      const assessed = checked || locked.has(number);
+      const isCorrect = responses[number] === item.answer;
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'card' + (selected === number ? ' selected' : '') + (assessed ? (isCorrect ? ' correct' : ' incorrect') : '');
+      card.dataset.number = String(number);
+      card.disabled = assessed;
+      card.setAttribute('aria-pressed', selected === number ? 'true' : 'false');
+      const label = document.createElement('span');
+      label.className = 'number';
+      label.textContent = 'QUESTION ' + number;
+      const sentence = document.createElement('span');
+      sentence.className = 'sentence';
+      const blank = document.createElement('span');
+      blank.className = 'blank';
+      blank.textContent = '________';
+      sentence.append(document.createTextNode(item.before), blank, document.createTextNode(item.after));
+      const choice = document.createElement('span');
+      choice.className = 'choice';
+      choice.textContent = responses[number] ? 'Your choice: ' + phrase(responses[number]).label : 'Tap to choose a phrase';
+      const feedback = document.createElement('span');
+      feedback.className = 'feedback';
+      feedback.textContent = assessed ? (isCorrect ? '✓ Correct · ' + item.form : '↻ Try this one again') : '';
+      card.append(label, sentence, choice, feedback);
+      card.addEventListener('click', () => {
+        selected = selected === number ? null : number;
+        render();
+        if (selected !== null && window.matchMedia('(max-width: 560px)').matches) $('bank').scrollIntoView({block: 'start'});
+      });
+      questions.append(card);
+    }
+    $('retry').hidden = !checked;
+    updateProgress();
+  }
+  function restart() {
+    order = shuffled(items.map(item => item.number));
+    bankOrder = shuffled(phrases.map(entry => entry.id));
+    responses = {};
+    locked = new Set();
+    selected = null;
+    checked = false;
+    $('result').hidden = true;
+    render();
+    window.scrollTo(0, 0);
+  }
+  $('check').addEventListener('click', () => {
+    if ($('check').disabled || checked) return;
+    checked = true;
+    selected = null;
+    const correctQuestions = items.filter(item => responses[item.number] === item.answer).map(item => item.number);
+    const score = correctQuestions.length;
+    render();
+    const headline = document.createElement('strong');
+    headline.textContent = 'Score ' + score + '/8';
+    const message = document.createElement('p');
+    message.textContent = score === 8 ? 'Excellent! All 8 answers are correct. Tap Restart for a new order.' : 'Tap Try Again to redo the incorrect answers. Correct choices stay in place.';
+    $('result').replaceChildren(headline, message);
+    $('result').hidden = false;
+    $('result').focus();
+    $('result').scrollIntoView({block: 'nearest'});
+    window.dispatchEvent(new CustomEvent('unit1-score-ready', {detail: {
+      exerciseId: 'unit1-part-c', classCode: $('class-code').value.trim(),
+      studentNumber: $('student-number').value.trim(), score, total: 8, correctQuestions
+    }}));
+  });
+  $('retry').addEventListener('click', () => {
+    if (!checked) return;
+    if (items.every(item => responses[item.number] === item.answer)) { restart(); return; }
+    for (const item of items) {
+      if (responses[item.number] === item.answer) locked.add(item.number);
+      else delete responses[item.number];
+    }
+    checked = false;
+    selected = null;
+    $('result').hidden = true;
+    render();
+    const first = $('questions').querySelector('.card:not(:disabled)');
+    if (first) { first.focus(); first.scrollIntoView({block: 'center'}); }
+  });
+  $('restart').addEventListener('click', restart);
+  restart();
+</script>
+<script src="firebase-config.js"></script>
+<script type="module" src="student-scores-c.js"></script>
+</body>
+</html>
