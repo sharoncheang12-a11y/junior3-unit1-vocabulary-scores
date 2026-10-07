@@ -32,6 +32,10 @@
     th { color: #476058; font-size: 13px; }
     tr:last-child td { border-bottom: 0; }
     .score { font-weight: 800; }
+    .accuracy-table { min-width: 0; }
+    .accuracy-table th, .accuracy-table td { padding: 10px 8px; }
+    .accuracy-table .rate { font-weight: 800; }
+    .accuracy-table tr.needs-review td { background: #fff6f1; }
     .footnote { color: #64796b; font-size: 13px; line-height: 1.5; }
     [hidden] { display: none !important; }
     @media (max-width: 600px) { .filters { grid-template-columns: 1fr 1fr; } .filters button { grid-column: 1 / -1; } }
@@ -56,8 +60,14 @@
     </div>
     <p id="summary" class="summary"></p>
     <div class="scroll"><table><thead><tr><th>Submitted</th><th>Class</th><th>Student number</th><th>Score</th></tr></thead><tbody id="rows"></tbody></table></div>
-    <div class="bar" style="margin-top:16px"><button id="more" type="button" hidden>Load more attempts</button></div>
-    <p class="footnote">Filters apply to the attempts loaded so far. Use “Load more attempts” to see older results. A class and student number are entered by the student and are not identity verified.</p>
+    <p class="footnote">每次交卷都保留在此列表。班別及學號由學生自行輸入，並非經過身分核實。</p>
+  </section>
+  <section id="accuracy" class="panel" hidden>
+    <h2>每題正確率 · 首次交卷</h2>
+    <p class="intro">每位學生只計首次交卷，依正確率由低至高排列。上方的班別及學號篩選也適用於此表。</p>
+    <p id="accuracy-summary" class="summary" role="status" aria-live="polite"></p>
+    <div class="scroll"><table class="accuracy-table"><thead><tr><th>題號</th><th>答對／人數</th><th>正確率</th></tr></thead><tbody id="accuracy-rows"></tbody></table></div>
+    <p class="footnote">這個統計不保存學生輸入的答案文字。較早且沒有逐題資料的交卷仍會顯示於上方成績列表，但不計入正確率。</p>
   </section>
 </main>
 <script src="firebase-config.js?v=20260923"></script>
