@@ -66,5 +66,16 @@ service cloud.firestore {
         && request.resource.data == resource.data;
       allow delete: if false;
     }
+
+    match /unit1PartEAttempts/{attemptId} {
+      allow get, list: if teacher();
+      allow create: if request.auth != null && validAttempt('unit1-part-e', 12,
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+      // A retry may write the exact same attempt again, but cannot change it.
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.studentUid
+        && request.resource.data == resource.data;
+      allow delete: if false;
+    }
   }
 }
