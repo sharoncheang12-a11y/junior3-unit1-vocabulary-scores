@@ -50,6 +50,7 @@ window.addEventListener('unit1-score-ready', event => {
     studentNumber: detail.studentNumber,
     score: detail.score,
     total: 30,
+    correctQuestions: detail.correctQuestions,
     studentUid: auth.currentUser.uid,
     createdAt: Timestamp.now()
   }});
