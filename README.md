@@ -25,3 +25,5 @@ The Firebase rules are also saved in `firestore.rules` for future maintenance. T
 The original 11–24 exercise was verified on 2026-09-23: a 14/14 test attempt was saved, appeared in the signed-in teacher panel, and was deleted afterwards. Anonymous student sign-in also connected successfully. The original offline practice file remains at `../unit1-part-b-vocabulary.html`.
 
 The 25–40 exercise was verified on 2026-09-24: the published page connected, a clearly labelled `TEST-25-40` / `00` attempt scored 16/16, and that attempt appeared in the signed-in teacher panel. This test entry remains in the teacher records.
+
+The 11–40 exercise and question-accuracy panel were verified on 2026-10-07: `TEST-11-40` / `00` saved a 29/30 first attempt and a 30/30 retry. Both appear in the signed-in teacher score list, while question 11 remains 0/1 (0%) in the first-attempt accuracy table. These two clearly labelled test entries remain in the teacher records.
