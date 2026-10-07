@@ -14,6 +14,8 @@ This site has three full Junior 3 Unit 1 Part B exercises that record every chec
 
 Students enter a class and student number. Each time they press **Check Answers**, the page submits one attempt with its score and timestamp. The teacher pages require the configured Google account. Only that account may read attempts under the deployed Firestore rules. The student pages sign students in anonymously and do not ask them to create an account. The 11–24, 25–40, and 11–40 exercises use separate score collections; the combined exercise is scored out of 30.
 
+The combined 11–40 exercise also stores the numbers of correctly answered questions, without answer text. Its teacher page shows each question's accuracy using only each class-and-student-number pair's first submission, sorted from lowest accuracy upward. All submissions remain visible in the score list. Class and student-number filters apply to both views. Older combined submissions that lack question-level results remain in the score list but are excluded from the accuracy calculation.
+
 The full exercises require an internet connection. They do not collect names or answer text. Class and student number are self-entered, so this is a practice record rather than a verified assessment. Keep the teacher links for your own use; even if someone has them, they cannot read scores without the authorized Google account.
 
 The spot-check page randomly draws three different questions from 25–40 on load and Restart. It grades only after all three answers are entered and shows Score x/3 to present to the teacher in person. It does not use Firebase or collect class, student number, or scores. The downloaded HTML works offline.
