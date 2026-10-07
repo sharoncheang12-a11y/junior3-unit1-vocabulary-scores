@@ -147,7 +147,15 @@
         button.className = responses[number] === option ? 'selected' : '';
         button.setAttribute('aria-pressed', responses[number] === option ? 'true' : 'false');
         button.disabled = assessed;
-        button.addEventListener('click', () => { responses[number] = option; render(); });
+        button.addEventListener('click', () => {
+          responses[number] = option;
+          for (const choice of choices.children) {
+            const active = choice.textContent === option;
+            choice.className = active ? 'selected' : '';
+            choice.setAttribute('aria-pressed', active ? 'true' : 'false');
+          }
+          updateProgress();
+        });
         choices.append(button);
       }
       const feedback = document.createElement('p');
