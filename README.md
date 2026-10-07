@@ -1,6 +1,6 @@
 # Unit 1 vocabulary score tracker
 
-This site has three full Junior 3 Unit 1 Part B exercises and a Part C phrase exercise that record every checked attempt, plus a separate three-question spot check that keeps no records.
+This site has three full Junior 3 Unit 1 Part B exercises, a Part C phrase exercise, and a Part E word-formation exercise that record every checked attempt, plus a separate three-question spot check that keeps no records.
 
 - Questions 11–24 (student): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/
 - Questions 11–24 (teacher): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/teacher.html
@@ -12,6 +12,10 @@ This site has three full Junior 3 Unit 1 Part B exercises and a Part C phrase ex
 - Part C study tips (student): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-c.html
 - Part C study tips (teacher): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/teacher-c.html
 - Part C student QR code: https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-c-qr.png
+
+- Part E word formation (student): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-e.html
+- Part E word formation (teacher): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/teacher-e.html
+- Part E student QR code: https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-e-qr.png
 - Questions 25–40 (three-question spot check): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-b-25-40-quick-check.html
 - GitHub source: https://github.com/sharoncheang12-a11y/junior3-unit1-vocabulary-scores
 - Firebase project: `junior-3-unit-1-scores` (Spark/free, Firestore in Hong Kong)
@@ -21,6 +25,8 @@ Students enter a class and student number. Each time they press **Check Answers*
 The combined 11–40 exercise also stores the numbers of correctly answered questions, without answer text. Its teacher page shows each question's accuracy using only each class-and-student-number pair's first submission, sorted from lowest accuracy upward. All submissions remain visible in the score list. Class and student-number filters apply to both views. Older combined submissions that lack question-level results remain in the score list but are excluded from the accuracy calculation.
 
 Part C uses eight study-tip phrases from the worksheet word bank. Students tap a sentence and then a phrase; each phrase can be used once. Sentences and phrases shuffle on load and Restart. The two phrases requiring changed forms in the complete sentence are graded by phrase choice, with the correct form shown after a correct check. The worksheet key appears to contain the typo `work zout a study plan`; the exercise follows the word bank and sentence meaning with `work out a study plan`. The Part C teacher page lists every attempt and shows each question's first-submission accuracy, separately from Part B.
+
+Part E contains all 12 word-formation questions from the worksheet. Students choose one of the listed forms for each sentence. Questions and answer options shuffle on load and Restart, and all answers are checked together. The teacher page lists every attempt and shows each question's first-submission accuracy, separately from the other parts.
 
 The full exercises require an internet connection. They do not collect names or answer text. Class and student number are self-entered, so this is a practice record rather than a verified assessment. Keep the teacher links for your own use; even if someone has them, they cannot read scores without the authorized Google account.
 
