@@ -1,6 +1,6 @@
 # Unit 1 vocabulary score tracker
 
-This site has three full Junior 3 Unit 1 Part B exercises, a Part C phrase exercise, and a Part E word-formation exercise that record every checked attempt, plus a separate three-question spot check that keeps no records.
+This site has three full Junior 3 Unit 1 Part B exercises, a Part C phrase exercise, a Part E word-formation exercise, and a first-letter midtest practice that record every checked attempt, plus a separate three-question spot check that keeps no records.
 
 - Questions 11–24 (student): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/
 - Questions 11–24 (teacher): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/teacher.html
@@ -16,6 +16,10 @@ This site has three full Junior 3 Unit 1 Part B exercises, a Part C phrase exerc
 - Part E word formation (student): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-e.html
 - Part E word formation (teacher): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/teacher-e.html
 - Part E student QR code: https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-e-qr.png
+
+- First-letter midtest (student): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/first-letter-midtest.html
+- First-letter midtest (teacher): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/teacher-first-letter.html
+- First-letter midtest QR code: https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/first-letter-midtest-qr.png
 - Questions 25–40 (three-question spot check): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-b-25-40-quick-check.html
 - GitHub source: https://github.com/sharoncheang12-a11y/junior3-unit1-vocabulary-scores
 - Firebase project: `junior-3-unit-1-scores` (Spark/free, Firestore in Hong Kong)
@@ -27,6 +31,8 @@ The combined 11–40 exercise also stores the numbers of correctly answered ques
 Part C uses eight study-tip phrases from the worksheet word bank. Students tap a sentence and then a phrase; each phrase can be used once. Sentences and phrases shuffle on load and Restart. The two phrases requiring changed forms in the complete sentence are graded by phrase choice, with the correct form shown after a correct check. The worksheet key appears to contain the typo `work zout a study plan`; the exercise follows the word bank and sentence meaning with `work out a study plan`. The Part C teacher page lists every attempt and shows each question's first-submission accuracy, separately from Part B.
 
 Part E contains all 12 word-formation questions from the worksheet. Students choose one of the listed forms for each sentence. Questions and answer options shuffle on load and Restart, and all answers are checked together. The teacher page lists every attempt and shows each question's first-submission accuracy, separately from the other parts.
+
+The first-letter midtest practice uses the eight blanks in `First letterMidTest.docx`. Each blank is an independent card, including the two source rows with two blanks. Students type the full word or phrase, the cards shuffle on load and Restart, and marking is delayed until all eight answers are entered. `problem solving` is accepted alongside `problem-solving`, and `organization` alongside `organisation`. The teacher page lists every submission and reports each question's wrong-answer rate using only the first submission for each class-and-student-number pair, sorted from highest wrong rate to lowest. No answer text is stored.
 
 The full exercises require an internet connection. They do not collect names or answer text. Class and student number are self-entered, so this is a practice record rather than a verified assessment. Keep the teacher links for your own use; even if someone has them, they cannot read scores without the authorized Google account.
 
