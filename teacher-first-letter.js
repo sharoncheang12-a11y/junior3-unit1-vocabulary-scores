@@ -33,9 +33,11 @@ function renderScores(visible) {
   for (const attempt of visible) {
     const tr = document.createElement('tr');
     const date = attempt.createdAt?.toDate ? attempt.createdAt.toDate() : null;
-    for (const value of [date ? date.toLocaleString() : '—', attempt.classCode, attempt.studentNumber, `${attempt.score}/${attempt.total}`]) {
+    const values = [date ? date.toLocaleString() : '—', attempt.classCode, attempt.studentNumber, `${attempt.score}/${attempt.total}`];
+    for (const [index, value] of values.entries()) {
       const td = document.createElement('td');
       td.textContent = value;
+      td.dataset.label = ['Submitted', 'Class', 'Student number', 'Score'][index];
       tr.append(td);
     }
     tr.lastElementChild.className = 'score';
