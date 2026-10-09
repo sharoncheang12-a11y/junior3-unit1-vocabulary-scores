@@ -45,7 +45,11 @@
       .attempt-table thead { display: none; }
       .attempt-table tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 12px; border: 1px solid #d7e3d9; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
       .attempt-table td { display: block; border: 0; padding: 0; overflow-wrap: anywhere; }
-      .attempt-table td::before { content: attr(data-label); display: block; color: #476058; font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+      .attempt-table td::before { display: block; color: #476058; font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+      .attempt-table td:nth-child(1)::before { content: 'Submitted'; }
+      .attempt-table td:nth-child(2)::before { content: 'Class'; }
+      .attempt-table td:nth-child(3)::before { content: 'Student number'; }
+      .attempt-table td:nth-child(4)::before { content: 'Score'; }
       .attempt-table td:first-child, .attempt-table td:last-child { grid-column: 1 / -1; }
     }
   </style>
