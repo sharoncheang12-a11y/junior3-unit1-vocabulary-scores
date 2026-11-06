@@ -61,7 +61,13 @@
       .accuracy-table td:nth-child(3)::before { content: '正確單字'; }
       .accuracy-table td:nth-child(4)::before { content: '首次答錯／人數'; }
       .accuracy-table td:nth-child(5)::before { content: '錯誤率'; }
-      .accuracy-table td:nth-child(2) { grid-column: 1 / -1; }
+      .accuracy-table td:nth-child(1) { grid-column: 1; grid-row: 1; }
+      .accuracy-table td:nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+      .accuracy-table td:nth-child(3) { grid-column: 1; grid-row: 3; }
+      .accuracy-table td:nth-child(4) { grid-column: 2; grid-row: 3; text-align: right; }
+      .accuracy-table td:nth-child(5) { grid-column: 2; grid-row: 1; text-align: right; }
+      .accuracy-table tr.needs-review { background: #fff6f1; border-color: #e7c6b7; }
+      .accuracy-table tr.needs-review td { background: transparent; }
     }
   </style>
 </head>
