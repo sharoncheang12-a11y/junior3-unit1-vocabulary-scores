@@ -239,7 +239,7 @@
     clearDrag(); sentenceOrder = shuffled(sentences.map((_, index) => index));
     bankOrder = shuffled(items.map(item => item.number));
     responses = {}; locked = new Set(); selectedWord = null; checked = false;
-    $('result').hidden = true; render(); window.scrollTo(0, 0);
+    $('result').hidden = true; render(); $('bank').scrollTop = 0; window.scrollTo(0, 0);
   }
   $('check').addEventListener('click', () => {
     if ($('check').disabled || checked) return;
