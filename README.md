@@ -26,6 +26,10 @@ This site has three full Junior 3 Unit 1 Part B exercises, a Part C phrase exerc
 - Unit 2 Exercise A matching (teacher): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/teacher-unit2-exa.html
 
 - Unit 2 Exercise A student QR code: https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/unit2-exa-qr.png
+
+- Unit 2 Exercise A five-question spot check (no score tracking): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/unit2-exa-quick-check.html
+
+- Unit 2 Exercise A spot-check QR code: https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/unit2-exa-quick-check-qr.png
 - Questions 25–40 (three-question spot check): https://sharoncheang12-a11y.github.io/junior3-unit1-vocabulary-scores/part-b-25-40-quick-check.html
 - GitHub source: https://github.com/sharoncheang12-a11y/junior3-unit1-vocabulary-scores
 - Firebase project: `junior-3-unit-1-scores` (Spark/free, Firestore in Hong Kong)
@@ -41,6 +45,8 @@ Part E contains all 12 word-formation questions from the worksheet. Students cho
 The first-letter midtest practice uses the eight blanks in `First letterMidTest.docx`. Each blank is an independent card, including the two source rows with two blanks. Students type the full word or phrase, the cards shuffle on load and Restart, and marking is delayed until all eight answers are entered. `problem solving` is accepted alongside `problem-solving`, and `organization` alongside `organisation`. The teacher page lists every submission and reports each question's wrong-answer rate using only the first submission for each class-and-student-number pair, sorted from highest wrong rate to lowest. No answer text is stored.
 
 Unit 2 Exercise A uses all ten word/definition/part-of-speech matches from `Unit 2 vocabulary worksheet (T).docx`. Students tap a definition and then a word, and both orders shuffle on load and Restart. The page grades after all ten matches are made. The teacher page lists every attempt and reports per-definition wrong rates using only the first submission for each class-and-student-number pair. The worksheet labels `advertising` as `adjective`; the online exercise retains that label at the teacher's request. No selected-word text is stored.
+
+The Unit 2 Exercise A spot check draws five distinct definition/word pairs from the same ten on load and Restart. Only those five words appear in its bank. It grades all five together and displays Score x/5 for the student to show the teacher in person. It does not use Firebase, request class or student number, or save results; the standalone HTML works offline.
 
 The full exercises require an internet connection. They do not collect names or answer text. Class and student number are self-entered, so this is a practice record rather than a verified assessment. Keep the teacher links for your own use; even if someone has them, they cannot read scores without the authorized Google account.
 
