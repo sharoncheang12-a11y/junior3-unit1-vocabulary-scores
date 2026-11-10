@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 2 Exercise A · 5-question spot check</title>
+  <style>
+    :root { color-scheme: light; font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #19352f; background: #f5f7f2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 860px; margin: auto; padding: 25px 16px 60px; }
+    .eyebrow { margin: 0; color: #386b57; font-size: 12px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h1 { font-size: clamp(30px, 6vw, 43px); line-height: 1.1; margin: 8px 0 12px; }
+    h2 { font-size: 18px; margin: 0 0 12px; }
+    .intro, .note { color: #476058; line-height: 1.55; }
+    .instructions { background: #e7f0e9; border-left: 4px solid #397b59; border-radius: 12px; padding: 14px 16px; line-height: 1.55; margin: 18px 0; }
+    .instructions p { margin: 0; }
+    .instructions p + p { margin-top: 5px; }
+    button { min-height: 50px; padding: 10px 16px; border: 1.5px solid #9fb9a8; border-radius: 11px; background: #fff; color: #19352f; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    button:disabled { opacity: .52; cursor: default; }
+    button:focus-visible { outline: 3px solid #e9a23a; outline-offset: 2px; }
+    button.primary { background: #176046; border-color: #176046; color: #fff; }
+    .bank-wrap { position: sticky; top: 0; z-index: 2; background: #f5f7f2; padding: 9px 0 14px; border-bottom: 1px solid #d7e3d9; }
+    .bank { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+    .bank button { width: 100%; text-align: left; font-size: 14px; line-height: 1.25; background: #fff; }
+    .bank button.used { background: #e5eae5; color: #66766b; }
+    .section-heading { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin: 20px 0 12px; }
+    #progress { font-size: 14px; font-weight: 700; color: #476058; white-space: nowrap; }
+    .questions { display: grid; gap: 12px; }
+    .card { width: 100%; text-align: left; background: #fff; border: 2px solid #d7e3d9; border-radius: 16px; padding: 17px; scroll-margin-top: 160px; }
+    .card.selected { border-color: #176046; box-shadow: 0 0 0 3px #c9e3d0; }
+    .card.correct { border-color: #4e9463; background: #f4fbf4; }
+    .card.incorrect { border-color: #bc694c; background: #fff6f1; }
+    .number { display: block; color: #386b57; font-size: 13px; font-weight: 800; margin-bottom: 8px; }
+    .sentence { display: block; font-size: 17px; line-height: 1.55; }
+    .pos { display: inline-block; margin: 0 0 8px; padding: 3px 8px; border-radius: 999px; background: #e7f0e9; color: #315e4c; font-size: 12px; font-weight: 800; text-transform: uppercase; }
+    .choice { display: block; margin-top: 12px; color: #315e4c; font-size: 14px; font-weight: 700; }
+    .feedback { display: block; margin-top: 7px; font-size: 13px; font-weight: 700; }
+    .correct .feedback { color: #287044; }
+    .incorrect .feedback { color: #a34629; }
+    .actions { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; margin: 20px 0; }
+    .remaining { color: #526c60; font-size: 13px; }
+    .result { background: #e7f0e9; border-radius: 15px; padding: 18px; line-height: 1.5; }
+    .result strong { font-size: 25px; }
+    .result p { margin: 6px 0 0; }
+    .privacy { color: #64796b; font-size: 12px; line-height: 1.5; margin-top: 22px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 560px) { .bank-wrap { position: static; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 2 · Exercise A</p>
+  <h1>5-question spot check</h1>
+  <p class="intro">Match five randomly chosen definitions with their words. Use every word once.</p>
+  <div class="instructions">
+    <p>Tap a definition, then tap a word in the word bank. Tap the definition again to change its match.</p>
+    <p lang="zh-Hant">每次從 EXA 的 10 題中隨機抽 5 題，不會重複。全部配對後按 Check Answers，再把分數畫面給老師看。按 Restart 會重新抽題。</p>
+  </div>
+  <div class="bank-wrap"><h2>Word bank</h2><div id="bank" class="bank"></div></div>
+  <div class="section-heading"><h2>本輪 5 題</h2><span id="progress" role="status" aria-live="polite">0 / 5 matched</span></div>
+  <div id="questions" class="questions"></div>
+  <div class="actions">
+    <button id="check" class="primary" type="button" disabled>Check Answers</button>
+    <button id="restart" type="button">Restart</button>
+    <span id="remaining" class="remaining"></span>
+  </div>
+  <section id="result" class="result" tabindex="-1" aria-live="polite" hidden></section>
+  <p class="privacy">只在這個畫面顯示分數；不收集班別、學號或成績。下載 HTML 後也可離線使用。</p>
+  <noscript>This exercise needs JavaScript enabled in your browser.</noscript>
+</main>
+<script>
+  'use strict';
+  const items = [
+    { number: 1, word: 'advertising', pos: 'adjective', def: 'persuading people to buy products or services' },
+    { number: 2, word: 'thought', pos: 'noun', def: 'an idea' },
+    { number: 3, word: 'campaign', pos: 'noun', def: 'an activity that are intended to achieve an aim' },
+    { number: 4, word: 'frame', pos: 'noun', def: 'a border that surrounds a picture' },
+    { number: 5, word: 'approach', pos: 'verb', def: 'to come near' },
+    { number: 6, word: 'practice', pos: 'noun', def: 'action rather than thought or idea' },
+    { number: 7, word: 'opportunity', pos: 'noun', def: 'chance' },
+    { number: 8, word: 'stall', pos: 'noun', def: 'a large table / a small shop with an open front' },
+    { number: 9, word: 'theory', pos: 'noun', def: 'a formal statement of the rules' },
+    { number: 10, word: 'proposal', pos: 'noun', def: 'a suggestion' }
+  ];
+  const $ = id => document.getElementById(id);
+  let order = [], bankOrder = [], responses = {}, selected = null, checked = false;
+  function shuffled(values) {
+    const copy = [...values];
+    for (let i = copy.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }
+  function itemFor(number) { return items.find(entry => entry.number === number); }
+  function updateProgress() {
+    const filled = Object.keys(responses).length;
+    $('progress').textContent = filled + ' / 5 matched';
+    $('check').disabled = checked || filled !== order.length;
+    $('remaining').textContent = checked ? '' : filled === order.length ? 'Ready to check!' : (order.length - filled) + ' left';
+  }
+  function render() {
+    const bank = $('bank');
+    bank.replaceChildren();
+    for (const id of bankOrder) {
+      const entry = itemFor(id);
+      const used = Object.entries(responses).some(([number, value]) => value === id && Number(number) !== selected);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = entry.word;
+      button.className = used ? 'used' : '';
+      button.disabled = checked || used || selected === null;
+      button.setAttribute('aria-label', entry.word + (used ? ', already used' : ''));
+      button.addEventListener('click', () => {
+        if (selected === null || checked) return;
+        const currentIndex = order.indexOf(selected);
+        responses[selected] = id;
+        selected = null;
+        render();
+        if (window.matchMedia('(max-width: 560px)').matches) {
+          const nextNumber = [...order.slice(currentIndex + 1), ...order.slice(0, currentIndex)]
+            .find(number => !responses[number]);
+          const target = nextNumber ? $('questions').querySelector(`.card[data-number="${nextNumber}"]`) : $('check');
+          target.scrollIntoView({block: 'center'});
+        }
+      });
+      bank.append(button);
+    }
+    const questions = $('questions');
+    questions.replaceChildren();
+    for (const number of order) {
+      const item = itemFor(number);
+      const assessed = checked;
+      const isCorrect = responses[number] === item.number;
+      const card = document.createElement('button');
+      card.type = 'button';
+      card.className = 'card' + (selected === number ? ' selected' : '') + (assessed ? (isCorrect ? ' correct' : ' incorrect') : '');
+      card.dataset.number = String(number);
+      card.disabled = assessed;
+      card.setAttribute('aria-pressed', selected === number ? 'true' : 'false');
+      const label = document.createElement('span');
+      label.className = 'number';
+      label.textContent = 'DEFINITION ' + number;
+      const pos = document.createElement('span');
+      pos.className = 'pos';
+      pos.textContent = item.pos;
+      const sentence = document.createElement('span');
+      sentence.className = 'sentence';
+      sentence.textContent = item.def;
+      const choice = document.createElement('span');
+      choice.className = 'choice';
+      choice.textContent = responses[number] ? 'Your match: ' + itemFor(responses[number]).word : 'Tap to choose a word';
+      const feedback = document.createElement('span');
+      feedback.className = 'feedback';
+      feedback.textContent = assessed ? (isCorrect ? '✓ Correct' : '✗ Incorrect') : '';
+      card.append(label, pos, sentence, choice, feedback);
+      card.addEventListener('click', () => {
+        selected = selected === number ? null : number;
+        render();
+        if (selected !== null && window.matchMedia('(max-width: 560px)').matches) $('bank').scrollIntoView({block: 'start'});
+      });
+      questions.append(card);
+    }
+    updateProgress();
+  }
+  function restart() {
+    order = shuffled(items.map(item => item.number)).slice(0, 5);
+    bankOrder = shuffled(order);
+    responses = {};
+    selected = null;
+    checked = false;
+    $('result').hidden = true;
+    render();
+    window.scrollTo(0, 0);
+  }
+  $('check').addEventListener('click', () => {
+    if ($('check').disabled || checked) return;
+    checked = true;
+    selected = null;
+    const score = order.filter(number => responses[number] === number).length;
+    render();
+    const headline = document.createElement('strong');
+    headline.textContent = 'Score ' + score + '/5';
+    const message = document.createElement('p');
+    message.textContent = '請把這個分數畫面給老師看。本輪題號：' + [...order].sort((a, b) => a - b).join('、') + '。按 Restart 再抽 5 題。';
+    $('result').replaceChildren(headline, message);
+    $('result').hidden = false;
+    $('result').focus();
+    $('result').scrollIntoView({block: 'nearest'});
+  });
+  $('restart').addEventListener('click', restart);
+  restart();
+</script>
+</body>
+</html>
