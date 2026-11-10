@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 2 Vocabulary · Exercise B</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: #19352f; background: #f5f7f2; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { max-width: 940px; margin: auto; padding: 20px 14px 70px; }
+    h1 { font-size: clamp(29px, 6vw, 42px); margin: 6px 0 10px; }
+    h2 { font-size: 17px; margin: 0 0 9px; }
+    .eyebrow { margin: 0; color: #386b57; font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .intro, .note { color: #476058; line-height: 1.55; }
+    .instructions { background: #e7f0e9; border-left: 4px solid #397b59; border-radius: 12px; padding: 12px 15px; margin: 16px 0; line-height: 1.5; }
+    .instructions p { margin: 4px 0; }
+    .identity { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: white; border: 2px solid #d7e3d9; border-radius: 16px; padding: 15px; margin-bottom: 16px; }
+    .identity p { grid-column: 1 / -1; margin: 0; font-size: 13px; color: #526c60; }
+    label { display: block; color: #476058; font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+    input { width: 100%; min-height: 50px; border: 1.5px solid #9fb9a8; border-radius: 11px; padding: 10px 12px; font: inherit; font-size: 16px; }
+    button { font: inherit; cursor: pointer; touch-action: manipulation; }
+    button:focus-visible, input:focus-visible { outline: 3px solid #e9a23a; outline-offset: 2px; }
+    button:disabled { cursor: default; opacity: .6; }
+    .bank-wrap { position: sticky; top: 0; z-index: 5; background: #f5f7f2; padding: 8px 0 10px; border-bottom: 1px solid #d7e3d9; }
+    .bank-header, .section-heading { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+    .bank-header p, #progress { margin: 0; color: #476058; font-size: 13px; font-weight: 700; }
+    .bank { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 7px; max-height: 154px; overflow-y: auto; padding: 2px 2px 6px; overscroll-behavior: contain; }
+    .word { display: flex; align-items: stretch; min-width: 0; min-height: 44px; border: 1.5px solid #a8c1b0; border-radius: 10px; background: white; }
+    .word.selected { outline: 3px solid #e9a23a; }
+    .word.used { background: #e4e9e4; color: #66766b; border-color: #d3dcd4; }
+    .word .pick { flex: 1; min-width: 0; padding: 7px 5px 7px 9px; border: 0; background: transparent; color: inherit; text-align: left; font-size: 13px; font-weight: 700; overflow-wrap: anywhere; }
+    .word .handle { width: 32px; flex: none; border: 0; border-left: 1px solid #d7e3d9; background: transparent; color: #386b57; font-size: 17px; touch-action: none; cursor: grab; }
+    .word.used .handle { color: #89968a; }
+    .section-heading { margin: 18px 0 10px; }
+    .cards { display: grid; gap: 11px; }
+    .card { background: white; border: 2px solid #d7e3d9; border-radius: 15px; padding: 15px; scroll-margin-top: 210px; }
+    .card-number { display: block; color: #386b57; font-size: 12px; font-weight: 800; margin-bottom: 8px; }
+    .sentence { font-size: 17px; line-height: 2.7; margin: 0; }
+    .drop { display: inline-flex; vertical-align: middle; align-items: center; justify-content: center; min-width: 105px; max-width: 100%; min-height: 44px; margin: 0 2px; padding: 5px 9px; border: 2px dashed #9ab8a2; border-radius: 9px; background: #f5faf5; color: #315e4c; font-size: 14px; font-weight: 800; line-height: 1.25; overflow-wrap: anywhere; }
+    .drop.filled { border-style: solid; border-color: #397b59; background: #e7f0e9; }
+    .drop.target { box-shadow: 0 0 0 4px #f1bc5b; }
+    .drop.correct { border-color: #4e9463; background: #e3f4e6; }
+    .drop.incorrect { border-color: #bc694c; background: #fff1e9; }
+    .drag-ghost { position: fixed; z-index: 30; pointer-events: none; padding: 9px 12px; border-radius: 10px; background: #176046; color: white; font-size: 15px; font-weight: 800; box-shadow: 0 7px 22px #19352f55; transform: translate(-50%, -55px); max-width: 50vw; }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 18px 0; }
+    .actions button, #retry-save { min-height: 48px; padding: 9px 16px; border: 1.5px solid #9fb9a8; border-radius: 10px; background: white; color: #19352f; font-weight: 700; }
+    .actions .primary { background: #176046; border-color: #176046; color: white; }
+    #remaining { color: #526c60; font-size: 13px; }
+    .result { background: #e7f0e9; border-radius: 15px; padding: 18px; line-height: 1.5; }
+    .result strong { font-size: 25px; }
+    .result p { margin: 6px 0 0; }
+    .save-status { color: #315e4c; font-weight: 700; }
+    .save-status.error { color: #a34629; }
+    .privacy { color: #64796b; font-size: 12px; line-height: 1.5; margin-top: 20px; }
+    [hidden] { display: none !important; }
+    @media (max-width: 650px) { .bank { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 168px; } .identity { grid-template-columns: 1fr; } .sentence { font-size: 16px; } .card { scroll-margin-top: 215px; } }
+  </style>
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 2 · Exercise B</p>
+  <h1>Complete the sentences</h1>
+  <p class="intro">Use each answer once. Drag it to a blank, or tap an answer and then a blank. The sentences appear in a new order each time.</p>
+  <div class="instructions">
+    <p lang="zh-Hant">把答案拖到空格；也可以先點答案、再點空格。點已填的空格可清除答案。20 題填完後按 Check Answers 一次批改。</p>
+    <p lang="zh-Hant">沒有首字母提示。答案已按工作紙變化成所需形式。</p>
+  </div>
+  <div class="identity">
+    <div><label for="class-code">Class / 班別</label><input id="class-code" maxlength="24" autocomplete="off" placeholder="e.g. J3A"></div>
+    <div><label for="student-number">Student number / 學號</label><input id="student-number" maxlength="20" autocomplete="off" placeholder="e.g. 08"></div>
+    <p>Enter your class and student number before checking. Each check is recorded as one attempt. 請勿輸入姓名。</p>
+  </div>
+  <section class="bank-wrap" aria-label="Word bank">
+    <div class="bank-header"><h2>Answer bank</h2><p>☰ drag · tap to select</p></div>
+    <div id="bank" class="bank"></div>
+  </section>
+  <div class="section-heading"><h2>20 blanks</h2><span id="progress" role="status" aria-live="polite">0 / 20 filled</span></div>
+  <div id="cards" class="cards"></div>
+  <div class="actions">
+    <button id="check" class="primary" type="button" disabled>Check Answers</button>
+    <button id="retry" type="button" hidden>Try Again</button>
+    <button id="restart" type="button">Restart</button>
+    <span id="remaining"></span>
+  </div>
+  <section id="result" class="result" tabindex="-1" aria-live="polite" hidden></section>
+  <p id="save-status" class="save-status" role="status" aria-live="polite">Connecting to score tracker…</p>
+  <button id="retry-save" type="button" hidden>Retry score submission</button>
+  <p class="privacy">Your class, student number, score, correct question numbers and attempt time are sent to the teacher's private score page. Your chosen words are not stored. An internet connection is required.</p>
+  <noscript>This exercise needs JavaScript enabled in your browser.</noscript>
+</main>
+<script>
+  'use strict';
+  const items = [
+    { number: 11, word: 'principal' }, { number: 12, word: 'campus' },
+    { number: 13, word: 'business' }, { number: 14, word: 'permission' },
+    { number: 15, word: 'auction' }, { number: 16, word: 'bidding' },
+    { number: 17, word: 'attract' }, { number: 18, word: 'eye-catching' },
+    { number: 19, word: 'slogan' }, { number: 20, word: 'regretted' },
+    { number: 21, word: 'previous' }, { number: 22, word: 'suggested' },
+    { number: 23, word: 'decorations' }, { number: 24, word: 'handmade' },
+    { number: 25, word: 'own' }, { number: 26, word: 'invaluable' },
+    { number: 27, word: 'budget' }, { number: 28, word: 'sourcing' },
+    { number: 29, word: 'sponsors' }, { number: 30, word: 'ideal' }
+  ];
+  const sentences = [
+    'Our {{11}} Mr. Kong always encourages us to study hard to achieve our goals. He also promises students to give them more freedom to have activities on {{12}}.',
+    'John decided to buy and sell cars as his {{13}} in the future.',
+    'You need to ask for your parents’ {{14}} to go on the trip because you are under 18.',
+    'In the {{15}}, people are {{16}} fiercely for the luxurious watch right now.',
+    'Macao government makes many activities to {{17}} tourists to visit Macao.',
+    'The company has designed an {{18}} logo and a memorable {{19}} so many people can remember it.',
+    'Jacky felt sorry and {{20}} not working hard earlier.',
+    'Unlike {{21}} fairs, Miss Fung {{22}} that we might sell something creative instead of selling new year {{23}}.',
+    'The {{24}} props which are made by students are very popular. A lot of people choose them to take photos and write their {{25}} messages on the photo.',
+    'We believe that this plan would be an {{26}} opportunity for us to learn, from drawing up a {{27}}, to {{28}} products and finding {{29}}. It is an {{30}} way to put theory into practice.'
+  ];
+  const $ = id => document.getElementById(id);
+  const answer = number => items.find(item => item.number === number);
+  const shuffled = values => { const copy = [...values]; for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; };
+  window.scoreTrackingAvailable = false;
+  let sentenceOrder = [], bankOrder = [], responses = {}, locked = new Set(), selectedWord = null, checked = false, drag = null, ghost = null, dragTarget = null;
+  function usedWords() { return new Set(Object.values(responses)); }
+  function updateProgress() {
+    const filled = Object.keys(responses).length;
+    const identified = $('class-code').value.trim() && $('student-number').value.trim();
+    $('progress').textContent = filled + ' / 20 filled';
+    $('check').disabled = checked || filled !== 20 || !identified || !window.scoreTrackingAvailable;
+    $('remaining').textContent = checked ? '' : filled < 20 ? (20 - filled) + ' left' : !identified ? 'Enter class and student number' : window.scoreTrackingAvailable ? 'Ready to check!' : 'Connecting to score tracker…';
+  }
+  window.refreshCheckAvailability = updateProgress;
+  $('class-code').addEventListener('input', updateProgress);
+  $('student-number').addEventListener('input', updateProgress);
+  function assign(number, wordNumber) {
+    if (checked || locked.has(number) || usedWords().has(wordNumber) && responses[number] !== wordNumber) return;
+    responses[number] = wordNumber;
+    selectedWord = null;
+    render();
+  }
+  function renderBank() {
+    const bank = $('bank');
+    bank.replaceChildren();
+    const used = usedWords();
+    for (const number of bankOrder) {
+      const item = answer(number);
+      const wrapper = document.createElement('div');
+      wrapper.className = 'word' + (used.has(number) ? ' used' : '') + (selectedWord === number ? ' selected' : '');
+      const pick = document.createElement('button');
+      pick.type = 'button'; pick.className = 'pick'; pick.textContent = item.word;
+      pick.disabled = checked || used.has(number);
+      pick.setAttribute('aria-pressed', selectedWord === number ? 'true' : 'false');
+      pick.addEventListener('click', () => {
+        selectedWord = selectedWord === number ? null : number;
+        renderBank();
+      });
+      const handle = document.createElement('button');
+      handle.type = 'button'; handle.className = 'handle'; handle.textContent = '☰';
+      handle.disabled = checked || used.has(number);
+      handle.setAttribute('aria-label', 'Drag ' + item.word);
+      handle.addEventListener('pointerdown', event => startDrag(event, number));
+      wrapper.append(pick, handle); bank.append(wrapper);
+    }
+  }
+  function makeBlank(number) {
+    const button = document.createElement('button');
+    button.type = 'button'; button.className = 'drop'; button.dataset.number = String(number);
+    const chosen = responses[number];
+    button.textContent = chosen ? answer(chosen).word : 'No. ' + number + ' · drop here';
+    if (chosen) button.classList.add('filled');
+    if (checked || locked.has(number)) button.classList.add(chosen === number ? 'correct' : 'incorrect');
+    button.disabled = checked || locked.has(number);
+    button.setAttribute('aria-label', 'Blank ' + number + (chosen ? ', ' + answer(chosen).word : ', empty'));
+    button.addEventListener('click', () => {
+      if (checked || locked.has(number)) return;
+      if (selectedWord !== null) assign(number, selectedWord);
+      else if (responses[number]) { delete responses[number]; render(); }
+    });
+    return button;
+  }
+  function renderCards() {
+    const container = $('cards'); container.replaceChildren();
+    for (const index of sentenceOrder) {
+      const sentence = sentences[index];
+      const card = document.createElement('article'); card.className = 'card';
+      const numbers = [...sentence.matchAll(/\{\{(\d+)\}\}/g)].map(match => Number(match[1]));
+      const heading = document.createElement('span'); heading.className = 'card-number';
+      heading.textContent = 'QUESTIONS ' + numbers.join(', ');
+      const paragraph = document.createElement('p'); paragraph.className = 'sentence';
+      let cursor = 0;
+      for (const match of sentence.matchAll(/\{\{(\d+)\}\}/g)) {
+        paragraph.append(document.createTextNode(sentence.slice(cursor, match.index)));
+        paragraph.append(makeBlank(Number(match[1])));
+        cursor = match.index + match[0].length;
+      }
+      paragraph.append(document.createTextNode(sentence.slice(cursor)));
+      card.append(heading, paragraph); container.append(card);
+    }
+  }
+  function render() {
+    renderBank(); renderCards(); $('retry').hidden = !checked; updateProgress();
+  }
+  function clearDrag() {
+    drag = null;
+    if (ghost) { ghost.remove(); ghost = null; }
+    if (dragTarget) { dragTarget.classList.remove('target'); dragTarget = null; }
+  }
+  function startDrag(event, number) {
+    if (checked || usedWords().has(number) || event.button !== 0) return;
+    event.preventDefault();
+    drag = { pointerId: event.pointerId, number, x: event.clientX, y: event.clientY, moved: false };
+    const handle = event.currentTarget;
+    handle.setPointerCapture(event.pointerId);
+  }
+  function dragMove(event) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    if (!drag.moved && Math.hypot(event.clientX - drag.x, event.clientY - drag.y) < 6) return;
+    drag.moved = true;
+    if (!ghost) { ghost = document.createElement('div'); ghost.className = 'drag-ghost'; ghost.textContent = answer(drag.number).word; document.body.append(ghost); }
+    ghost.style.left = event.clientX + 'px'; ghost.style.top = event.clientY + 'px';
+    if (dragTarget) dragTarget.classList.remove('target');
+    dragTarget = document.elementFromPoint(event.clientX, event.clientY)?.closest('.drop:not(:disabled)') || null;
+    if (dragTarget) dragTarget.classList.add('target');
+    if (event.clientY > innerHeight - 75) window.scrollBy(0, 18);
+    else if (event.clientY < 75) window.scrollBy(0, -18);
+  }
+  function dragEnd(event) {
+    if (!drag || event.pointerId !== drag.pointerId) return;
+    const wordNumber = drag.number;
+    const moved = drag.moved;
+    const target = document.elementFromPoint(event.clientX, event.clientY)?.closest('.drop:not(:disabled)');
+    clearDrag();
+    if (moved && target) assign(Number(target.dataset.number), wordNumber);
+    else if (!moved) { selectedWord = selectedWord === wordNumber ? null : wordNumber; renderBank(); }
+  }
+  document.addEventListener('pointermove', dragMove);
+  document.addEventListener('pointerup', dragEnd);
+  document.addEventListener('pointercancel', clearDrag);
+  function restart() {
+    clearDrag(); sentenceOrder = shuffled(sentences.map((_, index) => index));
+    bankOrder = shuffled(items.map(item => item.number));
+    responses = {}; locked = new Set(); selectedWord = null; checked = false;
+    $('result').hidden = true; render(); window.scrollTo(0, 0);
+  }
+  $('check').addEventListener('click', () => {
+    if ($('check').disabled || checked) return;
+    checked = true; selectedWord = null;
+    const correctQuestions = items.filter(item => responses[item.number] === item.number).map(item => item.number);
+    const score = correctQuestions.length;
+    render();
+    const headline = document.createElement('strong'); headline.textContent = 'Score ' + score + '/20';
+    const message = document.createElement('p');
+    message.textContent = score === 20 ? 'Excellent! All answers are correct. Tap Restart for a new order.' : 'Tap Try Again to redo the incorrect blanks. Correct answers stay in place.';
+    $('result').replaceChildren(headline, message); $('result').hidden = false;
+    $('result').focus(); $('result').scrollIntoView({block: 'nearest'});
+    window.dispatchEvent(new CustomEvent('unit2-exb-score-ready', { detail: {
+      exerciseId: 'unit2-exb', classCode: $('class-code').value.trim(),
+      studentNumber: $('student-number').value.trim(), score, total: 20, correctQuestions
+    }}));
+  });
+  $('retry').addEventListener('click', () => {
+    if (!checked) return;
+    if (items.every(item => responses[item.number] === item.number)) { restart(); return; }
+    for (const item of items) {
+      if (responses[item.number] === item.number) locked.add(item.number);
+      else delete responses[item.number];
+    }
+    checked = false; selectedWord = null; $('result').hidden = true; render();
+    const first = $('cards').querySelector('.drop:not(:disabled)');
+    if (first) { first.focus(); first.scrollIntoView({block: 'center'}); }
+  });
+  $('restart').addEventListener('click', restart);
+  restart();
+</script>
+<script src="firebase-config.js"></script>
+<script type="module" src="student-scores-unit2-exb.js"></script>
+</body>
+</html>
