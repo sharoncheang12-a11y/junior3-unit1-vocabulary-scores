@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 2 Vocabulary · Exercise E</title>
+  <link rel="stylesheet" href="unit2-cde.css">
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 2 · Exercise E</p>
+  <h1>Choose the correct word form</h1>
+  <p class="intro">Read each sentence and tap A, B, C or D. All questions are checked together after you finish.</p>
+  <div class="instructions"><p lang="zh-Hant">14 題全做，題目每次打亂。點選答案後不會即時顯示對錯；完成後按 Check Answers 一次批改，答錯可重做。</p></div>
+  <div class="identity">
+    <div><label for="class-code">Class / 班別</label><input id="class-code" maxlength="24" autocomplete="off" placeholder="e.g. J3A"></div>
+    <div><label for="student-number">Student number / 學號</label><input id="student-number" maxlength="20" autocomplete="off" placeholder="e.g. 08"></div>
+    <p>Enter your class and student number before checking. Each check is recorded as one attempt. 請勿輸入姓名。</p>
+  </div>
+  <div class="section-heading"><h2>14 questions</h2><span id="progress" role="status" aria-live="polite">0 / 14 answered</span></div>
+  <div id="cards" class="cards"></div>
+  <div class="actions"><button id="check" class="primary" type="button" disabled>Check Answers</button><button id="retry" type="button" hidden>Try Again</button><button id="restart" type="button">Restart</button><span id="remaining"></span></div>
+  <section id="result" class="result" tabindex="-1" aria-live="polite" hidden></section>
+  <p id="save-status" class="save-status" role="status" aria-live="polite">Connecting to score tracker…</p>
+  <button id="retry-save" type="button" hidden>Retry score submission</button>
+  <p class="privacy">Your class, student number, score, correct question numbers and attempt time are sent to the teacher's private score page. Your selected letters are not stored. An internet connection is required.</p>
+</main>
+<script>
+window.UNIT2_PRACTICE = {
+  exerciseId: 'unit2-exe', collection: 'unit2ExEAttempts', total: 14,
+  items: [
+    {number:1,sentence:'We are going to {{}} having a class organisation.',options:{A:'propose',B:'proposal',C:'proposed'},answer:'A'},
+    {number:2,sentence:'It is terrible to see our class teacher Miss Vinci’s angry reaction to our {{}}.',options:{A:'propose',B:'proposal',C:'proposed'},answer:'B'},
+    {number:3,sentence:'Miss Vinci has an excellent {{}} for names because she can tell every student’s name.',options:{A:'memorise',B:'memory',C:'memorable',D:'memorably'},answer:'B'},
+    {number:4,sentence:'When I was in primary school, I was required to {{}} every poem in the textbook.',options:{A:'memorise',B:'memory',C:'memorable',D:'memorably'},answer:'A'},
+    {number:5,sentence:'She spoke {{}} of how she won the difficult game.',options:{A:'memorise',B:'memory',C:'memorable',D:'memorably'},answer:'D'},
+    {number:6,sentence:'Although the question is difficult, try to think about the {{}} answer.',options:{A:'possibility',B:'possible',C:'possibly'},answer:'B'},
+    {number:7,sentence:'Since we failed the English test, Miss Vinci might give us a detention {{}}.',options:{A:'possibility',B:'possible',C:'possibly'},answer:'C'},
+    {number:8,sentence:'It’s not likely to happen, but I wouldn’t rule out the {{}}.',options:{A:'possibility',B:'possible',C:'possibly'},answer:'A'},
+    {number:9,sentence:'It was difficult to {{}} how many people died in the disaster.',options:{A:'estimate',B:'estimation',C:'estimated'},answer:'A'},
+    {number:10,sentence:'The bridge was begun 5 years ago, but the {{}} expense has already doubled.',options:{A:'estimate',B:'estimation',C:'estimated'},answer:'C'},
+    {number:11,sentence:'People {{}} their old clothes and books to the charities to help the poor every year.',options:{A:'donate',B:'donation'},answer:'A'},
+    {number:12,sentence:'Miss Vinci gives a {{}} to the homeless cats regularly.',options:{A:'donate',B:'donation'},answer:'B'},
+    {number:13,sentence:'There was a big {{}} of time and money on school facilities at EMM School last year.',options:{A:'invest',B:'investment'},answer:'B'},
+    {number:14,sentence:'The millionaires {{}} 5 million in that project.',options:{A:'invest',B:'investment'},answer:'A'}
+  ]
+};
+</script>
+<script src="unit2-mcq-practice.js"></script>
+<script src="firebase-config.js"></script>
+<script type="module" src="student-scores-unit2-cde.js"></script>
+</body>
+</html>

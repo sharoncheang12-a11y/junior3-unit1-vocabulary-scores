@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Unit 2 Exercise C · Teacher Scores</title><link rel="stylesheet" href="teacher-unit2-cde.css"></head>
+<body><main>
+  <div class="eyebrow">Teacher only · Unit 2 Exercise C</div>
+  <h1>Student attempts</h1>
+  <p class="intro">Every Check Answers submission is listed separately. Students are identified by class and student number.</p>
+  <section class="panel"><div class="bar"><button id="sign-in" class="primary" type="button">Sign in with Google</button><button id="sign-out" type="button" hidden>Sign out</button></div><p id="status" role="status" aria-live="polite">Connecting…</p><p id="uid-help" hidden>Your Firebase UID: <code id="teacher-uid"></code><br>Use this UID in firebase-config.js and firestore.rules, then publish the Firestore rules.</p></section>
+  <section id="results" class="panel" hidden>
+    <h2>Sentence completion · 18 blanks</h2>
+    <div class="filters"><div><label for="filter-class">Class</label><input id="filter-class" type="search" placeholder="All classes"></div><div><label for="filter-number">Student number</label><input id="filter-number" type="search" placeholder="All students"></div><button id="refresh" type="button">Refresh</button></div>
+    <p id="summary" class="summary"></p><div class="scroll"><table class="attempt-table"><thead><tr><th>Submitted</th><th>Class</th><th>Student number</th><th>Score</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <p class="footnote">每次交卷都保留。班別及學號由學生自行輸入，並非經過身分核實。</p>
+  </section>
+  <section id="accuracy" class="panel" hidden>
+    <h2>每題錯誤率 · 首次交卷</h2><p class="intro">每位學生只計首次交卷，依錯誤率由高至低排列。上方篩選也適用於此表。</p><p id="accuracy-summary" class="summary" role="status" aria-live="polite"></p>
+    <div class="scroll"><table class="accuracy-table"><thead><tr><th>題號</th><th>句子片段</th><th>正確答案</th><th>首次答錯／人數</th><th>錯誤率</th></tr></thead><tbody id="accuracy-rows"></tbody></table></div>
+    <p class="footnote">只保存填對的題號，不保存學生選過的答案。</p>
+  </section>
+</main>
+<script>
+window.UNIT2_TEACHER = {exerciseId:'unit2-exc',collection:'unit2ExCAttempts',answers:[
+  {number:31,context:'The ___ English tests.',answer:'upcoming'},
+  {number:32,context:'…a few of ___.',answer:'accessories'},
+  {number:33,context:'…a ___ cost of $3000…',answer:'total'},
+  {number:34,context:'Our teacher ___ us opportunities…',answer:'offered'},
+  {number:35,context:'Jacky has ___ a study plan…',answer:'launched'},
+  {number:36,context:'All the ___ from the stall…',answer:'profits'},
+  {number:37,context:'…getting a ___ to show my work…',answer:'chance'},
+  {number:38,context:'…so many memorable ___ on my trip…',answer:'moments'},
+  {number:39,context:'…costumes and ___ to take pictures…',answer:'props'},
+  {number:40,context:'This photo ___ the wonderful moment…',answer:'captured'},
+  {number:41,context:'…spent months to ___.',answer:'identify a target market'},
+  {number:42,context:'…to ___ before an exam week…',answer:'make a schedule'},
+  {number:43,context:'___ is the key to the success…',answer:'Being hands-on'},
+  {number:44,context:'…laid off workers to ___.',answer:'cut costs'},
+  {number:45,context:'George ___ at the weekend market…',answer:'sets up a stall'},
+  {number:46,context:'…plans to ___ to expand the team…',answer:'recruit employees'},
+  {number:47,context:'Miss Sharon always ___ to help…',answer:'goes the extra mile'},
+  {number:48,context:'___ on social media is effective…',answer:'Promoting an event'}
+]};
+</script>
+<script src="firebase-config.js"></script><script type="module" src="teacher-unit2-cde.js"></script>
+</body></html>

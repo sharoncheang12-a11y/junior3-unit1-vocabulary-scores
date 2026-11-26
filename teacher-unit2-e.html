@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Unit 2 Exercise E · Teacher Scores</title><link rel="stylesheet" href="teacher-unit2-cde.css"></head>
+<body><main>
+  <div class="eyebrow">Teacher only · Unit 2 Exercise E</div>
+  <h1>Student attempts</h1>
+  <p class="intro">Every Check Answers submission is listed separately. Students are identified by class and student number.</p>
+  <section class="panel"><div class="bar"><button id="sign-in" class="primary" type="button">Sign in with Google</button><button id="sign-out" type="button" hidden>Sign out</button></div><p id="status" role="status" aria-live="polite">Connecting…</p><p id="uid-help" hidden>Your Firebase UID: <code id="teacher-uid"></code><br>Use this UID in firebase-config.js and firestore.rules, then publish the Firestore rules.</p></section>
+  <section id="results" class="panel" hidden>
+    <h2>Word forms · 14 questions</h2>
+    <div class="filters"><div><label for="filter-class">Class</label><input id="filter-class" type="search" placeholder="All classes"></div><div><label for="filter-number">Student number</label><input id="filter-number" type="search" placeholder="All students"></div><button id="refresh" type="button">Refresh</button></div>
+    <p id="summary" class="summary"></p><div class="scroll"><table class="attempt-table"><thead><tr><th>Submitted</th><th>Class</th><th>Student number</th><th>Score</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <p class="footnote">每次交卷都保留。班別及學號由學生自行輸入，並非經過身分核實。</p>
+  </section>
+  <section id="accuracy" class="panel" hidden>
+    <h2>每題錯誤率 · 首次交卷</h2><p class="intro">每位學生只計首次交卷，依錯誤率由高至低排列。上方篩選也適用於此表。</p><p id="accuracy-summary" class="summary" role="status" aria-live="polite"></p>
+    <div class="scroll"><table class="accuracy-table"><thead><tr><th>題號</th><th>句子片段</th><th>正確答案</th><th>首次答錯／人數</th><th>錯誤率</th></tr></thead><tbody id="accuracy-rows"></tbody></table></div>
+    <p class="footnote">只保存填對的題號，不保存學生選過的答案。</p>
+  </section>
+</main>
+<script>
+window.UNIT2_TEACHER = {exerciseId:'unit2-exe',collection:'unit2ExEAttempts',answers:[
+  {number:1,context:'going to ___ having a class organisation',answer:'A. propose'},
+  {number:2,context:'reaction to our ___',answer:'B. proposal'},
+  {number:3,context:'excellent ___ for names',answer:'B. memory'},
+  {number:4,context:'required to ___ every poem',answer:'A. memorise'},
+  {number:5,context:'spoke ___ of how she won',answer:'D. memorably'},
+  {number:6,context:'the ___ answer',answer:'B. possible'},
+  {number:7,context:'give us a detention ___',answer:'C. possibly'},
+  {number:8,context:'rule out the ___',answer:'A. possibility'},
+  {number:9,context:'difficult to ___ how many people',answer:'A. estimate'},
+  {number:10,context:'the ___ expense',answer:'C. estimated'},
+  {number:11,context:'___ their old clothes',answer:'A. donate'},
+  {number:12,context:'gives a ___ to the homeless cats',answer:'B. donation'},
+  {number:13,context:'a big ___ of time and money',answer:'B. investment'},
+  {number:14,context:'millionaires ___ 5 million',answer:'A. invest'}
+]};
+</script>
+<script src="firebase-config.js"></script><script type="module" src="teacher-unit2-cde.js"></script>
+</body></html>

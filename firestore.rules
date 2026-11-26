@@ -99,5 +99,47 @@ service cloud.firestore {
         && request.resource.data == resource.data;
       allow delete: if false;
     }
+
+    match /unit2ExBAttempts/{attemptId} {
+      allow get, list: if teacher();
+      allow create: if request.auth != null && validAttempt('unit2-exb', 20,
+        [11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+          28, 29, 30]);
+      // An identical retry may repeat a write, but a saved attempt cannot change.
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.studentUid
+        && request.resource.data == resource.data;
+      allow delete: if false;
+    }
+
+    match /unit2ExCAttempts/{attemptId} {
+      allow get, list: if teacher();
+      allow create: if request.auth != null && validAttempt('unit2-exc', 18,
+        [31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48]);
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.studentUid
+        && request.resource.data == resource.data;
+      allow delete: if false;
+    }
+
+    match /unit2ExDAttempts/{attemptId} {
+      allow get, list: if teacher();
+      allow create: if request.auth != null && validAttempt('unit2-exd', 8,
+        [49, 50, 51, 52, 53, 54, 55, 56]);
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.studentUid
+        && request.resource.data == resource.data;
+      allow delete: if false;
+    }
+
+    match /unit2ExEAttempts/{attemptId} {
+      allow get, list: if teacher();
+      allow create: if request.auth != null && validAttempt('unit2-exe', 14,
+        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]);
+      allow update: if request.auth != null
+        && request.auth.uid == resource.data.studentUid
+        && request.resource.data == resource.data;
+      allow delete: if false;
+    }
   }
 }

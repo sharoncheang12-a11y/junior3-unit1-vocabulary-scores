@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 2 Vocabulary · Exercise C</title>
+  <link rel="stylesheet" href="unit2-cde.css">
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 2 · Exercise C</p>
+  <h1>Complete the sentences</h1>
+  <p class="intro">Use each answer once in its section. Drag an answer to a blank, or tap an answer and then a blank.</p>
+  <div class="instructions"><p lang="zh-Hant">兩組共 18 題。每組的題目和答案都會打亂；把答案拖到空格，也可點選配對。全部填完後按 Check Answers 一次批改，答錯可重做。</p></div>
+  <div class="identity">
+    <div><label for="class-code">Class / 班別</label><input id="class-code" maxlength="24" autocomplete="off" placeholder="e.g. J3A"></div>
+    <div><label for="student-number">Student number / 學號</label><input id="student-number" maxlength="20" autocomplete="off" placeholder="e.g. 08"></div>
+    <p>Enter your class and student number before checking. Each check is recorded as one attempt. 請勿輸入姓名。</p>
+  </div>
+  <div class="section-heading"><h2>18 blanks</h2><span id="progress" role="status" aria-live="polite">0 / 18 filled</span></div>
+  <section class="group"><div class="group-title"><h2>Words · 31–40</h2><p>Use each word once</p></div><div class="bank-wrap"><div id="bank-0" class="bank" aria-label="Words answer bank"></div></div><div id="cards-0" class="cards"></div></section>
+  <section class="group"><div class="group-title"><h2>Phrases · 41–48</h2><p>Use each phrase once</p></div><div class="bank-wrap"><div id="bank-1" class="bank" aria-label="Phrases answer bank"></div></div><div id="cards-1" class="cards"></div></section>
+  <div class="actions"><button id="check" class="primary" type="button" disabled>Check Answers</button><button id="retry" type="button" hidden>Try Again</button><button id="restart" type="button">Restart</button><span id="remaining"></span></div>
+  <section id="result" class="result" tabindex="-1" aria-live="polite" hidden></section>
+  <p id="save-status" class="save-status" role="status" aria-live="polite">Connecting to score tracker…</p>
+  <button id="retry-save" type="button" hidden>Retry score submission</button>
+  <p class="privacy">Your class, student number, score, correct question numbers and attempt time are sent to the teacher's private score page. Your chosen answers are not stored. An internet connection is required.</p>
+</main>
+<script>
+window.UNIT2_PRACTICE = {
+  exerciseId: 'unit2-exc', collection: 'unit2ExCAttempts', total: 18,
+  groups: [
+    { title: 'Words', items: [
+      {number:31,word:'upcoming',sentence:'The students set study goals and plans for the {{31}} English tests.'},
+      {number:32,word:'accessories',sentence:'The kitchen looks better with new paint and a few of {{32}}.'},
+      {number:33,word:'total',sentence:'We estimate that we need a {{33}} cost of $3000 for the trip.'},
+      {number:34,word:'offered',sentence:'Our teacher {{34}} us a lot of opportunities to take part in different competitions.'},
+      {number:35,word:'launched',sentence:'Jacky has {{35}} a study plan before a new school year.'},
+      {number:36,word:'profits',sentence:'All the {{36}} from the stall will be donated to help the homeless next week.'},
+      {number:37,word:'chance',sentence:'I look forward to getting a {{37}} to show my work on the stage.'},
+      {number:38,word:'moments',sentence:'There were so many memorable {{38}} on my trip in Japan and I took lots of photos.'},
+      {number:39,word:'props',sentence:'The children put on some costumes and {{39}} to take funny pictures at Halloween.'},
+      {number:40,word:'captured',sentence:'This photo {{40}} the wonderful moment of my childhood.'}
+    ]},
+    { title: 'Phrases', items: [
+      {number:41,word:'identify a target market',sentence:'Before launching a new product, the company spent months to {{41}}.'},
+      {number:42,word:'make a schedule',sentence:'It is a good habit to {{42}} before an exam week because you can keep track of your planned tasks.'},
+      {number:43,word:'Being hands-on',sentence:'{{43}} is the key to the success when you run a small company.'},
+      {number:44,word:'cut costs',sentence:'The company has laid off several workers to {{44}} because the project is over budget.'},
+      {number:45,word:'sets up a stall',sentence:'George {{45}} at the weekend market selling fruits and vegetables every week.'},
+      {number:46,word:'recruit employees',sentence:'The company plans to {{46}} to expand the team for the upcoming project.'},
+      {number:47,word:'goes the extra mile',sentence:'Miss Sharon always {{47}} to help her students figure out problems.'},
+      {number:48,word:'Promoting an event',sentence:'{{48}} on social media is an effective way for customers to know your products.'}
+    ]}
+  ]
+};
+</script>
+<script src="unit2-drag-practice.js"></script>
+<script src="firebase-config.js"></script>
+<script type="module" src="student-scores-unit2-cde.js"></script>
+</body>
+</html>

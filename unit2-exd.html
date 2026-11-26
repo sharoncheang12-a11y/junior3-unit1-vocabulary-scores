@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Unit 2 Vocabulary · Exercise D</title>
+  <link rel="stylesheet" href="unit2-cde.css">
+</head>
+<body>
+<main>
+  <p class="eyebrow">Junior 3 · Unit 2 · Exercise D</p>
+  <h1>Match the synonyms</h1>
+  <p class="intro">Match each highlighted word from the passage with a synonym. Use every answer once.</p>
+  <div class="instructions"><p lang="zh-Hant">8 題近義詞。把答案拖到對應的單字卡，也可先點答案、再點空格。題目和答案每次打亂；完成後一次批改，答錯可重做。</p></div>
+  <div class="identity">
+    <div><label for="class-code">Class / 班別</label><input id="class-code" maxlength="24" autocomplete="off" placeholder="e.g. J3A"></div>
+    <div><label for="student-number">Student number / 學號</label><input id="student-number" maxlength="20" autocomplete="off" placeholder="e.g. 08"></div>
+    <p>Enter your class and student number before checking. Each check is recorded as one attempt. 請勿輸入姓名。</p>
+  </div>
+  <div class="section-heading"><h2>8 synonyms</h2><span id="progress" role="status" aria-live="polite">0 / 8 filled</span></div>
+  <section class="group"><div class="bank-wrap"><div class="group-title"><h2>Synonym bank</h2><p>☰ drag · tap to select</p></div><div id="bank-0" class="bank" aria-label="Synonym bank"></div></div><div id="cards-0" class="cards"></div></section>
+  <div class="actions"><button id="check" class="primary" type="button" disabled>Check Answers</button><button id="retry" type="button" hidden>Try Again</button><button id="restart" type="button">Restart</button><span id="remaining"></span></div>
+  <section id="result" class="result" tabindex="-1" aria-live="polite" hidden></section>
+  <p id="save-status" class="save-status" role="status" aria-live="polite">Connecting to score tracker…</p>
+  <button id="retry-save" type="button" hidden>Retry score submission</button>
+  <p class="privacy">Your class, student number, score, correct question numbers and attempt time are sent to the teacher's private score page. Your chosen answers are not stored. An internet connection is required.</p>
+</main>
+<script>
+window.UNIT2_PRACTICE = {
+  exerciseId: 'unit2-exd', collection: 'unit2ExDAttempts', total: 8,
+  groups: [{ title: 'Synonyms', items: [
+    {number:49,word:'sincerely',prompt:'truly',context:'We truly hope to make a special game booth for our school fair.'},
+    {number:50,word:'create',prompt:'make',context:'We truly hope to make a special game booth for our school fair.'},
+    {number:51,word:'unique',prompt:'special',context:'We truly hope to make a special game booth for our school fair.'},
+    {number:52,word:'operate',prompt:'work',context:'To work it smoothly, we designed stylish rules.'},
+    {number:53,word:'snappy',prompt:'stylish',context:'To work it smoothly, we designed stylish rules.'},
+    {number:54,word:'similar',prompt:'alike',context:'We designed stylish rules that are not alike to others.'},
+    {number:55,word:'expense',prompt:'spend',context:'Though the spend is a little high, we believe we will get lots of fun and precious experience.'},
+    {number:56,word:'gain',prompt:'get',context:'We believe we will get lots of fun and precious experience.'}
+  ]}]
+};
+</script>
+<script src="unit2-drag-practice.js"></script>
+<script src="firebase-config.js"></script>
+<script type="module" src="student-scores-unit2-cde.js"></script>
+</body>
+</html>
